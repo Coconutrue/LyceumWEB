@@ -18,10 +18,10 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect(url_for('hello_world'), 303)
+        return redirect(url_for('hello_world'))
     return render_template('login.html', title='Authorization', form=form)
 
-@app.route('/hello_world', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def hello_world():
     return render_template('hello_world.html', title='Authorization')
 
