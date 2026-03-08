@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/style_lms.css">
+    <title>{{title}}</title>
+</head>
+<body>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <div class="container text-center">
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+                <div class="card border-secondary mb-4" style="width: 37rem;">
+                    <div class="card-body">
+                        <h1 style="color: #2F4F4F"> Вы уверены, что хотите перейти дальше? Дальше дизайна нет.<br>
+                            Последующие страницы сделаны исключительно в целях показать мои умения в области применения технологий изученных в уроках.</h1>
+                    </div>
+                    <div class="container text-center">
+                        <div class="row justify-content-md-center">
+                            <div class="col">
+                                <p>{{ form.Comeback(type="submit", class="btn-3d btn-info btn-lg") }}</p>
+                            </div>
+                            <div class="col">
+                                <p>{{ form.Next(type="submit", class="btn-3d btn-warning btn-lg") }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

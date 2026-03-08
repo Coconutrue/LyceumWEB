@@ -10,6 +10,10 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Keep me logged in')
     submit = SubmitField('Log In')
 
+class PerehodnikForm(FlaskForm):
+    Next = SubmitField('Next?')
+    Comeback = SubmitField('Comeback')
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
@@ -18,12 +22,15 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect(url_for('hello_world'))
+        return redirect(url_for('perehodnik_lyceum'))
     return render_template('login.html', title='Authorization', form=form)
 
 @app.route('/', methods=['GET', 'POST'])
-def hello_world():
-    return render_template('hello_world.html', title='Authorization')
+def perehodnik_lyceum():
+    form = PerehodnikForm()
+    if form.validate_on_submit():
+        print("idi hahui")
+    return render_template('perehodnik_lyceum.html', title='COMEBACK', form=form)
 
 
 if __name__ == '__main__':
