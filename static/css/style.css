@@ -1,0 +1,38 @@
+body {
+    background-image: url('/static/img/2025-10-11_14.21.27.png');
+}
+.card {
+    background-color: rgba(141, 145, 122, 0.1) !important;
+    backdrop-filter: blur(1px);
+}
+
+.card.border-secondary {
+    background-color: rgba(0, 0, 0, 0.175) !important;
+    backdrop-filter: blur(3px);
+}
+
+.custom-border {
+    border-color: #696969; /* замените на нужный цвет */
+}
+
+.list-group-item {
+    background-color: transparent !important;
+    border: none;
+}
+.form-control {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    backdrop-filter: blur(1px);
+    color: #F0FFF0
+}
+
+h1, h2, h3, h4{
+            margin-top: 15px;
+            font-family: Monospace, navbar-brand
+            }
+form {
+        margin-top: 90px;
+        font-family: Arial, Helvetica, sans-serif;
+        }
+.navbar-brand {
+    font-family: Monospace, navbar-brand
+}
