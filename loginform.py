@@ -25,7 +25,7 @@ def home():
     return render_template('home.html', title='Home', form=form)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/perehodnik_lyceum', methods=['GET', 'POST'])
 def perehodnik_lyceum():
     form = PerehodnikForm()
     if form.validate_on_submit():
@@ -41,47 +41,3 @@ def perehodnik_lyceum():
 
 if __name__ == '__main__':
     app.run(port=2010, host='127.0.0.1')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
