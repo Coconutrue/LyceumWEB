@@ -12,7 +12,11 @@ class LoginForm(FlaskForm):
 
 class homeForm(FlaskForm):
     Lyceum = SubmitField('Lyceum?')
+    register = SubmitField('Authorization')
 
 class PerehodnikForm(FlaskForm):
     Next = SubmitField('Next?')
     Comeback = SubmitField('Comeback')
+class lyceum_form(FlaskForm):
+    TrueHome = SubmitField('Home')
+
