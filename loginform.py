@@ -14,7 +14,7 @@ def home():
     form = homeForm()
     if form.validate_on_submit():
         if form.Lyceum.data:
-            return redirect(url_for('perehodnik_lyceum'))
+            return redirect(url_for('lyceum_home'))
         elif form.register.data:
             return redirect(url_for('login'))
     return render_template('home.html', title='Home', form=form)
@@ -26,16 +26,6 @@ def login():
         return redirect(url_for('home'))
     return render_template('login.html', title='Authorization', form=form)
 
-@app.route('/perehodnik_lyceum', methods=['GET', 'POST'])
-def perehodnik_lyceum():
-    form = PerehodnikForm()
-    if form.validate_on_submit():
-        if form.Next.data:
-            return redirect(url_for('lyceum_home'))
-        elif form.Comeback.data:
-            return redirect(url_for('home'))
-    return render_template('perehodnik_lyceum.html', title='COMEBACK', form=form)
-
 @app.route('/lyceum_home', methods=['GET', 'POST'])
 def lyceum_home():
     form = lyceum_form()
@@ -44,4 +34,4 @@ def lyceum_home():
             return redirect(url_for('home'))
     return render_template('lyceum_home.html', form=form)
 if __name__ == '__main__':
-    app.run(port=2010, host='127.0.0.1', debug=True)
+    app.run(port=2010, host='127.0.0.1')

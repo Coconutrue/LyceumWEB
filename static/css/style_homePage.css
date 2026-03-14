@@ -1,0 +1,5 @@
+.animate__animated.animate__bounce {
+  --animate-duration: 3s;
+}
+
+/* This changes all the animations globally */

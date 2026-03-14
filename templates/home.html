@@ -7,23 +7,46 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
           crossorigin="anonymous">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="/static/css/style_homePage.css">
+    <title>Home page</title>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-lg bg-dark">
         <div class="container-fluid">
-            <h2 style="color: white">Clan Wars</h2>
-            <form action="" method="post" novalidate>
-                {{ form.hidden_tag() }}
-                <p>{{ form.Lyceum(type="submit", class="btn-3d btn-info btn-lg") }}</p>
-                <p>{{ form.register(type="submit", class="btn-3d btn-info btn-lg") }}</p>
-            </form>
+            <h2 class="animate__animated animate__backInLeft" style="color: white">Clan Wars</h2>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                Dropdown button
+            </button>
+            <ul class="dropdown-menu">
+                <li><h6 class="dropdown-header">Dropdown header</h6></li>
+                <li>
+                    <div class="dropdown-item">
+                    <form action="" method="post" novalidate>
+                        {{ form.hidden_tag() }}
+                        <p>{{ form.register(type="submit", class="btn-3d btn-info btn-lg") }}</p>
+                    </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown-item">
+                    <form action="" method="post" novalidate>
+                        {{ form.hidden_tag() }}
+                        <p>{{ form.register(type="submit", class="btn-3d btn-info btn-lg") }}</p>
+                    </form>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
-
 </header>
-<h2>пока тут ничего нету, но в скором времени тут появится сайт и больше кнопок</h2>
 
+<!-- jQuery and Bootstrap 4 JavaScript (обязательно) -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
