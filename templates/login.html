@@ -14,15 +14,23 @@
                     <ul class="list-group list-group-flush bg-transparent">
                     <li class="list-group-item">
                         <div style="light">
-                            {{ form.username(class="form-control custom-border", placeholder="Username") }}<br>
-                            {% for error in form.username.errors %}
+                            {{ form.username_log(class="form-control custom-border", placeholder="Username") }}<br>
+                            {% for error in form.username_log.errors %}
                         </div>
                         <div class="alert alert-danger" role="alert">
                             {{ error }}
                         </div>
                         {% endfor %}
-                            {{ form.password(class="form-control custom-border", type="password", placeholder="Password") }}<br>
-                            {% for error in form.password.errors %}
+                        <div style="light">
+                            {{ form.email_log(class="form-control custom-border", placeholder="email") }}<br>
+                            {% for error in form.email_log.errors %}
+                        </div>
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                            {{ form.password_log(class="form-control custom-border", type="password", placeholder="Password") }}<br>
+                            {% for error in form.password_log.errors %}
                         <div class="alert alert-danger" role="alert">
                             {{ error }}
                         </div>
@@ -31,11 +39,11 @@
                     </ul>
                     <div class="container text-center">
                         <div class="row justify-content-md-center">
-                            <div class="col-md-auto">
-                                <h5>{{ form.remember_me() }} {{ form.remember_me.label }}</h5>
+                            <div class="col">
+                                <p> </p>
                             </div>
-                            <div class="col-md-auto">
-                                <p>{{ form.submit(type="submit", class="btn-3d btn-info btn-lg ") }}</p>
+                            <div class="col">
+                                <p>{{ form.submit_log(type="submit", class="btn-3d btn-info btn-lg") }}</p>
                             </div>
                         </div>
                     </div>
@@ -50,22 +58,30 @@
                     </div>
                     <ul class="list-group list-group-flush bg-transparent">
                     <li class="list-group-item">
-                        <div style="red">
-                            {{ form.username(class="form-control custom-border", placeholder="Username") }}<br>
-                            {% for error in form.username.errors %}
+                        <div>
+                            {{ form.username_reg(class="form-control custom-border", placeholder="Username") }}<br>
+                            {% for error in form.username_reg.errors %}
                         </div>
                         <div class="alert alert-danger" role="alert">
                             {{ error }}
                         </div>
                         {% endfor %}
-                            {{ form.password(class="form-control custom-border", type="password", placeholder="Password") }}<br>
-                            {% for error in form.password.errors %}
+                        <div>
+                            {{ form.email_reg(class="form-control custom-border", placeholder="email") }}<br>
+                            {% for error in form.email_reg.errors %}
+                        </div>
                         <div class="alert alert-danger" role="alert">
                             {{ error }}
                         </div>
                         {% endfor %}
-                            {{ form.confirm_password(class="form-control custom-border", type="password", placeholder="Confirm_Password") }}<br>
-                            {% for error in form.password.errors %}
+                            {{ form.password_reg(class="form-control custom-border", type="password", placeholder="Password") }}<br>
+                            {% for error in form.password_reg.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                            {{ form.confirm_password_reg(class="form-control custom-border", type="password", placeholder="Confirm_Password") }}<br>
+                            {% for error in form.confirm_password_reg.errors %}
                         <div class="alert alert-danger" role="alert">
                             {{ error }}
                         </div>
@@ -78,7 +94,7 @@
                                 <p> </p>
                             </div>
                             <div class="col">
-                                <p>{{ form.submit(type="submit", class="btn-3d btn-info btn-lg") }}</p>
+                                <p>{{ form.submit_reg(type="submit", class="btn-3d btn-info btn-lg") }}</p>
                             </div>
                         </div>
                     </div>

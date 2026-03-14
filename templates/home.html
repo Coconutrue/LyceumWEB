@@ -13,35 +13,32 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg bg-dark">
-        <div class="container-fluid">
-            <h2 class="animate__animated animate__backInLeft" style="color: white">Clan Wars</h2>
-        </div>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                Dropdown button
-            </button>
-            <ul class="dropdown-menu">
-                <li><h6 class="dropdown-header">Dropdown header</h6></li>
-                <li>
-                    <div class="dropdown-item">
-                    <form action="" method="post" novalidate>
-                        {{ form.hidden_tag() }}
-                        <p>{{ form.register(type="submit", class="btn-3d btn-info btn-lg") }}</p>
-                    </form>
-                    </div>
-                </li>
-                <li>
-                    <div class="dropdown-item">
-                    <form action="" method="post" novalidate>
-                        {{ form.hidden_tag() }}
-                        <p>{{ form.register(type="submit", class="btn-3d btn-info btn-lg") }}</p>
-                    </form>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <div class="container-fluid">
+                <h2 class="animate__animated animate__backInLeft" style="color: white">Clan Wars</h2>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Dropdown button
+                </button>
+                <ul class="dropdown-menu">
+                    <li><h6 class="dropdown-header">Dropdown header</h6></li>
+                    <li>
+                        <div class="dropdown-item">
+                            <p>{{ form.register(type="submit", class="btn-3d btn-info btn-lg") }}</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown-item">
+                            <p>{{ form.register(type="submit", class="btn-3d btn-info btn-lg") }}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </form>
 </header>
 
 <!-- jQuery and Bootstrap 4 JavaScript (обязательно) -->
