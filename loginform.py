@@ -20,24 +20,30 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+
     if form.validate_on_submit():
-        if form.password_reg.data != form.confirm_password_reg.data:
-            return render_template('login.html', title='Регистрация',
-                                   form=form,
-                                   message="Пароли не совпадают")
         db_sess = db_session.create_session()
-        if db_sess.query(User).filter(User.email == form.email_log.data).first():
-            return render_template('login.html', title='Регистрация',
-                                   form=form,
-                                   message="Такой пользователь уже есть")
-        user = User(
-            name=form.username_reg.data,
-            email=form.email_reg.data,
-        )
-        user.set_password(form.password_reg.data)
-        db_sess.add(user)
-        db_sess.commit()
-        return redirect(url_for('home'))
+        user = db_sess.query(User).filter(User.email == form.email_log.data).first()
+        if user and user.check_password(form.password_log.data):
+            return redirect(url_for('home'))
+        else:
+            if form.password_reg.data != form.confirm_password_reg.data:
+                return render_template('login.html', title='Регистрация',
+                                       form=form,
+                                       message="Пароли не совпадают")
+            db_sess = db_session.create_session()
+            if db_sess.query(User).filter(User.email == form.email_log.data).first():
+                return render_template('login.html', title='Регистрация',
+                                       form=form,
+                                       message="Такой пользователь уже есть")
+            user = User(
+                name=form.username_reg.data,
+                email=form.email_reg.data,
+            )
+            user.set_password(form.password_reg.data)
+            db_sess.add(user)
+            db_sess.commit()
+            return redirect(url_for('home'))
     return render_template('login.html', title='Authorization', form=form)
 
 @app.route('/lyceum_home', methods=['GET', 'POST'])
