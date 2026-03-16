@@ -1,5 +1,24 @@
 .animate__animated.animate__bounce {
   --animate-duration: 3s;
 }
+body {
+    background-image: url('/static/img/порт.png');
+}
 
-/* This changes all the animations globally */
+.dropdown-full-width {
+    position: static !important;
+}
+
+.dropdown-full-width .dropdown-menu {
+    width: 100%;
+    left: 0;
+    right: 0;
+    transform: none !important;
+    margin-top: 0.5rem;
+}
+
+.navbar {
+    position: relative;
+}
+
+
