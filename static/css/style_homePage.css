@@ -3,18 +3,31 @@
 }
 body {
     background-image: url('/static/img/порт.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.dropdown-menu {
+    background-color: rgba(52, 58, 64, 0.8) !important;
+    backdrop-filter: blur(2px);
+}
+.dropdown-item {
+    background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .dropdown-full-width {
+    background-color: transparent !important;
     position: static !important;
 }
 
 .dropdown-full-width .dropdown-menu {
     width: 100%;
-    left: 0;
-    right: 0;
+    left: 0,01;
+    right: 0,01;
     transform: none !important;
-    margin-top: 0.5rem;
+    margin-top: 0.000000000001rem;
 }
 
 .navbar {

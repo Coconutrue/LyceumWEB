@@ -1,6 +1,15 @@
 body {
     background-image: url('/static/img/2025-10-11_14.21.27.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
+
+.animate__animated.animate__bounce {
+  --animate-duration: 3s;
+}
+
 .card {
     background-color: rgba(141, 145, 122, 0.1) !important;
     backdrop-filter: blur(1px);
@@ -30,7 +39,7 @@ h1, h2, h3, h4{
             font-family: Monospace, navbar-brand
             }
 form {
-        margin-top: 90px;
+        margin-top: 100px;
         font-family: Arial, Helvetica, sans-serif;
         }
 .navbar-brand {
