@@ -17,7 +17,11 @@ class LoginForm(FlaskForm):
 class homeForm(FlaskForm):
     Lyceum = SubmitField('Lyceum?')
     register = SubmitField('Authorization')
-
+    profile = SubmitField('переделать под корень(профиль)')
+    map = SubmitField('map')
+    news = SubmitField('news')
+    rules = SubmitField('rules')
+    donation = SubmitField('donation')
 
 class PerehodnikForm(FlaskForm):
     Next = SubmitField('Next?')

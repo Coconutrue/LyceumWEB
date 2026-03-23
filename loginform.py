@@ -9,6 +9,17 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 
 @app.route('/')
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    form = homeForm()
+    if form.validate_on_submit():
+        if form.Lyceum.data:
+            return redirect(url_for('lyceum_home'))
+        elif form.register.data:
+            return redirect(url_for('login'))
+    return render_template('home.html', title='Home', form=form)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -51,16 +62,6 @@ def login():
                                    message="Invalid email or password")
 
     return render_template('login.html', title='Authorization', form=form)
-
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    form = homeForm()
-    if form.validate_on_submit():
-        if form.Lyceum.data:
-            return redirect(url_for('lyceum_home'))
-        elif form.register.data:
-            return redirect(url_for('login'))
-    return render_template('home.html', title='Home', form=form)
 
 @app.route('/lyceum_home', methods=['GET', 'POST'])
 def lyceum_home():

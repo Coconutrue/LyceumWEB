@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="/static/css/style_homePage.css">
     <title>Home page</title>
@@ -16,37 +16,104 @@
     <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
         <nav class="navbar navbar-expand-lg bg-dark">
-            <div class="container-fluid w-100">
-                <h2 class="animate__animated animate__backInLeft" style="color: white">Clan Wars</h2>
-
-                <div class="dropdown dropdown-full-width">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" style="color: white">
-                        Dropdown button
-                    </button>
-
-                    <div class="dropdown-menu">
-                        <ul class="list-unstyled mb-0">
-                            <li><h6 class="dropdown-header">Dropdown header</h6></li>
-                            <li>
-                                <div class="dropdown-item">
-                                    {{ form.register(type="submit", class="btn-3d btn-info btn-lg") }}
-                                </div>
-                            </li>
-                            <li>
-                                <div class="dropdown-item">
-                                    {{ form.Lyceum(type="submit", class="btn-3d btn-info btn-lg") }}
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="container-fluid w-100 justify-content-center">
+                <div class="otstup_ mt-1">
+                    <h2 class="mb-1 animate__animated animate__backInLeft" style="color: #ffc107">Clan Wars</h2>
                 </div>
+                <div class="otstup mt-3">
+                    <p class="mb-0 animate__animated animate__backInLeft" >{{ form.donation(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
+                </div>
+                <div class="otstup mt-3">
+                    <p class="mb-0 animate__animated animate__fadeInDown">{{ form.map(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
+                </div>
+                <div class="otstup mt-3">
+                    <p class="mb-0 animate__animated animate__fadeInDown">{{ form.news(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
+                </div>
+                <div class="otstup mt-3">
+                    <p class="mb-0 animate__animated animate__backInRight">{{ form.rules(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
+                </div>
+<!--                <<div class="dropdown dropdown-full-width">-->
+<!--                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white">-->
+<!--                        Dropdown button-->
+<!--                    </button>-->
+
+<!--                    <div class="dropdown-menu">-->
+<!--                        <ul class="list-unstyled mb-0">-->
+<!--                            <li><h6 class="dropdown-header">Dropdown header</h6></li>-->
+<!--                            <li>-->
+<!--                                <div class="dropdown-item">-->
+<!--                                    {{ form.register(type="submit", class="btn-3d btn-info btn-lg") }}-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <div class="dropdown-item">-->
+<!--                                    {{ form.Lyceum(type="submit", class="btn-3d btn-info btn-lg") }}-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <div class="dropdown-item">-->
+<!--                                    <iframe-->
+<!--                                      src="http://217.106.107.168:38815?viev=flat"-->
+<!--                                      width="100%"-->
+<!--                                      height="600"-->
+<!--                                      title="BlueMap"-->
+<!--                                    ></iframe>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+
+            <div class="otstup mt-3">
+                <p class="mb-0 animate__animated animate__backInRight">{{ form.profile(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
             </div>
         </nav>
     </form>
 </header>
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<div class="text-center mb-2">
+    <h4 class="t mb-1" style="color: #000000">Добро пожаловать на проект!</h4>
+    <hr class="border-5 w-75 mx-auto mt-0" style="color: #000000">
+</div>
+
+
+<div class="back">
+<div class="card_back border-secondary_back mb-4" style="width: max;">
+    <div class="card-body">
+        <div class="card border-secondary mb-4" style="width: 70rem;">
+            <div class="card-body">
+                <div id="interiors/landscapes" class="carousel slide carousel-fade">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="/static/img/домикиУдальнегоЗамка.png" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/static/img/back_reg.png" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/static/img/джунгли.png" class="d-block w-100" alt="...">
+                        </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+          </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 </body>
 </html>
