@@ -2,13 +2,39 @@ from data import db_session
 from flask import Flask, request, url_for, render_template, redirect, flash
 from classes import LoginForm, homeForm
 from data.users import User
+from flask_login import LoginManager
+
 
 app = Flask(__name__)
+login_manager = LoginManager()
+login_manager.init_app(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-
-
-
 @app.route('/')
+@login_manager.user_loader
+def load_user(user_id):
+    db_sess = db_session.create_session()
+    return db_sess.get(User,user_id)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     form = homeForm()
@@ -22,6 +48,25 @@ def home():
         elif form.rules.data:
             return redirect(url_for('rules'))
     return render_template('home.html', title='Home', form=form)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -66,6 +111,23 @@ def login():
                                    message="Invalid email or password")
 
     return render_template('login.html', title='Authorization', form=form)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/about_project', methods=['GET', 'POST'])
 def about_project():
