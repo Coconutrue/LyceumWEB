@@ -2,7 +2,7 @@
   --animate-duration: 3s;
 }
 body {
-    background-image: url('/static/img/порт.png');
+    background-image: url('/static/img/фон.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -58,16 +58,14 @@ body {
     backdrop-filter: blur(1px);
 }
 
-.t{
-    margin-top: 100px;
-}
-.back {
-    margin-top: 200px;
+.b{
+    margin-top: 50px;
 }
 
-.card_back.border-secondary_back {
-    background-color: rgba(0, 0, 0, 0.125) !important;
-    backdrop-filter: blur(6px);
+.t{
+    margin-top: 200px;
+    font-family: MS Sans Cerif, sans-serif;
+
 }
 
 .otstup {
@@ -81,4 +79,59 @@ body {
 .otstup_ {
     margin-right: 100px;
     }
+
+.card {
+    margin: 0 auto;
+    border: 3px solid rgba(218, 165, 32, 0.5);  /* Рамка: толщина, тип, цвет */
+    border-radius: 15px;  /* Скругленные углы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Тень для объема */
+    overflow: hidden;
+}
+
+
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.5s ease;
+    margin-bottom: 30px;
+
+}
+
+.hover-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.card_max {
+    width: 40rem;
+    height: 600px;
+    cursor: pointer;
+    overflow: hidden;
+}
+.card_min {
+    width: 40rem;
+    height: 300px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.card-text-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.card-text-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #ffc107;
+    transition: width 0.4s ease-in-out;
+}
+
+.hover-card:hover .card-text-wrapper::after {
+    width: 100%;
+}
+
 

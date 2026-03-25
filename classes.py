@@ -23,9 +23,6 @@ class homeForm(FlaskForm):
     rules = SubmitField('rules')
     donation = SubmitField('donation')
 
-class PerehodnikForm(FlaskForm):
-    Next = SubmitField('Next?')
-    Comeback = SubmitField('Comeback')
-class lyceum_form(FlaskForm):
-    TrueHome = SubmitField('Home')
+
+
 

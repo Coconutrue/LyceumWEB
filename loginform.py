@@ -1,6 +1,6 @@
 from data import db_session
 from flask import Flask, request, url_for, render_template, redirect, flash
-from classes import LoginForm, homeForm, PerehodnikForm, lyceum_form
+from classes import LoginForm, homeForm
 from data.users import User
 
 app = Flask(__name__)
@@ -13,10 +13,14 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 def home():
     form = homeForm()
     if form.validate_on_submit():
-        if form.Lyceum.data:
-            return redirect(url_for('lyceum_home'))
-        elif form.register.data:
+        if form.register.data:
             return redirect(url_for('login'))
+        elif form.map.data:
+            return redirect(url_for('map'))
+        elif form.news.data:
+            return redirect(url_for('news'))
+        elif form.rules.data:
+            return redirect(url_for('rules'))
     return render_template('home.html', title='Home', form=form)
 
 
@@ -63,13 +67,33 @@ def login():
 
     return render_template('login.html', title='Authorization', form=form)
 
-@app.route('/lyceum_home', methods=['GET', 'POST'])
-def lyceum_home():
-    form = lyceum_form()
-    if form.validate_on_submit():
-        if form.TrueHome.data:
-            return redirect(url_for('home'))
-    return render_template('lyceum_home.html', form=form)
+@app.route('/about_project', methods=['GET', 'POST'])
+def about_project():
+    return render_template('about_project.html')
+
+@app.route('/interior_payments', methods=['GET', 'POST'])
+def interior_payments():
+    return render_template('interior_payments.html')
+
+@app.route('/map', methods=['GET', 'POST'])
+def map():
+    return render_template('map.html')
+
+@app.route('/news', methods=['GET', 'POST'])
+def news():
+    return render_template('news.html')
+
+@app.route('/rules', methods=['GET', 'POST'])
+def rules():
+    return render_template('rules.html')
+
+@app.route('/locations', methods=['GET', 'POST'])
+def locations():
+    return render_template('locations.html')
+
+@app.route('/What_is_this', methods=['GET', 'POST'])
+def Monsters():
+    return render_template('Monsters.html')
 
 
 if __name__ == '__main__':

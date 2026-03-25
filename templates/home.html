@@ -32,37 +32,6 @@
                 <div class="otstup mt-3">
                     <p class="mb-0 animate__animated animate__backInRight">{{ form.rules(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
                 </div>
-<!--                <<div class="dropdown dropdown-full-width">-->
-<!--                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white">-->
-<!--                        Dropdown button-->
-<!--                    </button>-->
-
-<!--                    <div class="dropdown-menu">-->
-<!--                        <ul class="list-unstyled mb-0">-->
-<!--                            <li><h6 class="dropdown-header">Dropdown header</h6></li>-->
-<!--                            <li>-->
-<!--                                <div class="dropdown-item">-->
-<!--                                    {{ form.register(type="submit", class="btn-3d btn-info btn-lg") }}-->
-<!--                                </div>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <div class="dropdown-item">-->
-<!--                                    {{ form.Lyceum(type="submit", class="btn-3d btn-info btn-lg") }}-->
-<!--                                </div>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <div class="dropdown-item">-->
-<!--                                    <iframe-->
-<!--                                      src="http://217.106.107.168:38815?viev=flat"-->
-<!--                                      width="100%"-->
-<!--                                      height="600"-->
-<!--                                      title="BlueMap"-->
-<!--                                    ></iframe>-->
-<!--                                </div>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
 
             <div class="otstup mt-3">
@@ -73,44 +42,69 @@
 </header>
 
 <div class="text-center mb-2">
-    <h4 class="t mb-1" style="color: #000000">Добро пожаловать на проект!</h4>
-    <hr class="border-5 w-75 mx-auto mt-0" style="color: #000000">
+    <h3 class="t mb-1" style="color: white">Welcome to the project!</h3>
+    <hr class="border-1 w-75 mx-auto mt-0" style="color: white">
 </div>
 
 
-<div class="back">
-<div class="card_back border-secondary_back mb-4" style="width: max;">
-    <div class="card-body">
-        <div class="card border-secondary mb-4" style="width: 70rem;">
-            <div class="card-body">
-                <div id="interiors/landscapes" class="carousel slide carousel-fade">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="/static/img/домикиУдальнегоЗамка.png" class="d-block w-100" alt="...">
+<div class="b">
+<div class="container mt-4">
+    <div class="row g-5">
+        <!-- Левый столбец -->
+        <div class="col-md-6">
+            <div class="d-flex flex-column gap-4">
+                <div class="animate__animated animate__zoomIn">
+                    <a href="{{ url_for('about_project') }}" class="card card_min text-bg-dark text-decoration-none hover-card">
+                        <img src="/static/img/причал.png" class="card-img" alt="...">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                            <div class="card-text-wrapper">
+                                <h2 style="color: white">About project</h2>
+                            </div>
                         </div>
-                        <div class="carousel-item">
-                            <img src="/static/img/back_reg.png" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="/static/img/джунгли.png" class="d-block w-100" alt="...">
-                        </div>
+                    </a>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                <div class="animate__animated animate__zoomIn">
+                    <a href="{{ url_for('interior_payments') }}" class="card card_max text-bg-dark text-decoration-none hover-card">
+                        <img src="/static/img/лесок.png" class="card-img" alt="...">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                            <div class="card-text-wrapper">
+                                <h2 style="color: white">Interior and payments</h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-          </div>
         </div>
 
+        <!-- Правый столбец -->
+        <div class="col-md-6">
+            <div class="d-flex flex-column gap-4">
+                <div class="animate__animated animate__zoomIn">
+                    <a href="{{ url_for('locations') }}" class="card card_max text-bg-dark text-decoration-none hover-card">
+                        <img src="/static/img/храм.png" class="card-img" alt="...">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                            <div class="card-text-wrapper">
+                                <h2 style="color: white">Locations</h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="animate__animated animate__zoomIn">
+                    <a href="{{ url_for('Monsters') }}" class="card card_min text-bg-dark text-decoration-none hover-card">
+                        <img src="/static/img/монстры/орк_с_рогами.png" class="card-img" alt="...">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                            <div class="card-text-wrapper">
+                                <h2 style="color: white">Mobs and bosses</h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
