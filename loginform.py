@@ -21,6 +21,8 @@ def home():
             return redirect(url_for('news'))
         elif form.rules.data:
             return redirect(url_for('rules'))
+        elif form.profile.data:
+            return redirect(url_for('login'))
     return render_template('home.html', title='Home', form=form)
 
 
