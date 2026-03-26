@@ -1,5 +1,5 @@
 from data import db_session
-from flask import Flask, request, render_template, redirect, abort
+from flask import Flask, request, render_template, redirect, abort, session
 from classes import LoginForm, NewsForm
 from data.users import User
 from flask_login import LoginManager, current_user, login_required, login_user  # ← ДОБАВИТЬ login_user
@@ -16,7 +16,7 @@ def index():
     if current_user.is_authenticated:
         # Исправленный фильтр
         news = db_sess.query(News).filter(
-            (News.user == current_user) | (News.is_private == False)  # ← != True лучше заменить на == False
+            (News.user == current_user) | (News.is_private == True)  # ← != True лучше заменить на == False
         ).all()  # ← ДОБАВИТЬ .all()
     else:
         news = db_sess.query(News).filter(News.is_private == False).all()  # ← ДОБАВИТЬ .all()
@@ -36,7 +36,9 @@ def login():
         user = db_sess.query(User).filter(User.email == form.email_log.data).first()
         # ИСПРАВЛЕНО: form.password_log.data
         if user and user.check_password(form.password_log.data):
-            login_user(user)  # ← ДОБАВЛЕНО
+            login_user(user)
+            print(f"Пользователь {user.name} авторизован")  # ← Проверка
+            print(f"Сессия после login_user: {dict(session)}")
             return redirect("/")
         return render_template('login.html',
                                message="Неправильный логин или пароль",
