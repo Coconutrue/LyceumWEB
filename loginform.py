@@ -24,6 +24,8 @@ def home():
             return redirect(url_for('rules'))
         elif form.profile.data:
             return redirect(url_for('profile'))
+        elif form.log_in.data:
+            return redirect(url_for('login'))
     return render_template('home.html', title='Home', form=form)
 
 @app.route('/about_project', methods=['GET', 'POST'])
@@ -59,35 +61,36 @@ def profile():
     form = ProfileForm()
     db_sess = db_session.create_session()
     if form.validate_on_submit():
-        user = db_sess.query(User).filter(User.id == current_user.id).first()
-        if form.username.data != user.name:
-            existing_user = db_sess.query(User).filter(User.name == form.username.data).first()
-            if existing_user and existing_user.id != user.id:
-                return render_template('profile.html',
-                                       form=form,
-                                       message="Это имя пользователя уже занято")
-            user.name = form.username.data
-        if form.email.data != user.email:
-            existing_user = db_sess.query(User).filter(User.email == form.email.data).first()
-            if existing_user and existing_user.id != user.id:
-                return render_template('profile.html',
-                                       form=form,
-                                       message="Этот email уже используется")
-            user.email = form.email.data
-        if form.new_password.data:
-            if not user.check_password(form.old_password.data):
-                return render_template('profile.html',
-                                       form=form,
-                                       message="Неверный старый пароль")
-            if form.new_password.data != form.confirm_password.data:
-                return render_template('profile.html',
-                                       form=form,
-                                       message="Новые пароли не совпадают")
-            user.set_password(form.new_password.data)
-        db_sess.commit()
-        return render_template('profile.html',
-                               form=form,
-                               message="Профиль успешно обновлен!")
+        if form.submit.data:
+            user = db_sess.query(User).filter(User.id == current_user.id).first()
+            if form.username.data != user.name:
+                existing_user = db_sess.query(User).filter(User.name == form.username.data).first()
+                if existing_user and existing_user.id != user.id:
+                    return render_template('profile.html',
+                                           form=form,
+                                           message="Это имя пользователя уже занято")
+                user.name = form.username.data
+            if form.email.data != user.email:
+                existing_user = db_sess.query(User).filter(User.email == form.email.data).first()
+                if existing_user and existing_user.id != user.id:
+                    return render_template('profile.html',
+                                           form=form,
+                                           message="Этот email уже используется")
+                user.email = form.email.data
+            if form.new_password.data:
+                if not user.check_password(form.old_password.data):
+                    return render_template('profile.html',
+                                           form=form,
+                                           message="Неверный старый пароль")
+                if form.new_password.data != form.confirm_password.data:
+                    return render_template('profile.html',
+                                           form=form,
+                                           message="Новые пароли не совпадают")
+                user.set_password(form.new_password.data)
+            db_sess.commit()
+            return render_template('profile.html',
+                                   form=form,
+                                   message="Профиль успешно обновлен!")
     else:
         form.username.data = current_user.name
         form.email.data = current_user.email
@@ -177,21 +180,6 @@ def news_delete(id):
 
 
 """логин регистрация, вся фигня"""
-
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         db_sess = db_session.create_session()
-#         user = db_sess.query(User).filter(User.email == form.email_log.data).first()
-#         if user and user.check_password(form.password_log.data):
-#             login_user(user)
-#             return redirect("/news")
-#         return render_template('login.html',
-#                                message="Неправильный логин или пароль",
-#                                form=form)
-#     return render_template('login.html', title='Авторизация', form=form)
-
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()

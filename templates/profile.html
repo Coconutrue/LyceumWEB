@@ -1,79 +1,101 @@
-{% extends "base_log.html" %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>{{title}}</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid w-100">
+            <div class="otstup mt-3">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-warning btn-wide">На главную</a>
+            </div>
+        </div>
+    </nav>
+</header>
 
-{% block content %}
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
+            <div class="card bg-dark text-white">
+                <div class="card-header bg-secondary">
                     <h3>Профиль пользователя</h3>
                 </div>
                 <div class="card-body">
                     {% if message %}
                         <div class="alert alert-info alert-dismissible fade show" role="alert">
                             {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endif %}
-                    
+
                     <form method="POST" action="">
                         {{ form.hidden_tag() }}
-                        
+
                         <div class="mb-3">
                             {{ form.username.label(class="form-label") }}
                             {{ form.username(class="form-control") }}
                             {% for error in form.username.errors %}
-                                <div class="alert alert-danger">{{ error }}</div>
+                                <div class="alert alert-danger mt-1">{{ error }}</div>
                             {% endfor %}
                         </div>
-                        
+
                         <div class="mb-3">
                             {{ form.email.label(class="form-label") }}
                             {{ form.email(class="form-control") }}
                             {% for error in form.email.errors %}
-                                <div class="alert alert-danger">{{ error }}</div>
+                                <div class="alert alert-danger mt-1">{{ error }}</div>
                             {% endfor %}
                         </div>
-                        
+
                         <hr>
                         <h5>Смена пароля</h5>
                         <p class="text-muted">Оставьте поля пустыми, если не хотите менять пароль</p>
-                        
+
                         <div class="mb-3">
                             {{ form.old_password.label(class="form-label") }}
                             {{ form.old_password(class="form-control") }}
                             {% for error in form.old_password.errors %}
-                                <div class="alert alert-danger">{{ error }}</div>
+                                <div class="alert alert-danger mt-1">{{ error }}</div>
                             {% endfor %}
                         </div>
-                        
+
                         <div class="mb-3">
                             {{ form.new_password.label(class="form-label") }}
                             {{ form.new_password(class="form-control") }}
                             {% for error in form.new_password.errors %}
-                                <div class="alert alert-danger">{{ error }}</div>
+                                <div class="alert alert-danger mt-1">{{ error }}</div>
                             {% endfor %}
                         </div>
-                        
+
                         <div class="mb-3">
                             {{ form.confirm_password.label(class="form-label") }}
                             {{ form.confirm_password(class="form-control") }}
                             {% for error in form.confirm_password.errors %}
-                                <div class="alert alert-danger">{{ error }}</div>
+                                <div class="alert alert-danger mt-1">{{ error }}</div>
                             {% endfor %}
                         </div>
-                        
+
                         <div class="d-grid gap-2">
                             {{ form.submit(class="btn btn-primary") }}
                         </div>
                     </form>
                 </div>
-                <div class="card-footer text-muted">
-                    <a href="{{ url_for('home') }}" class="btn btn-secondary">На главную</a>
-                    <a href="{{ url_for('logout') }}" class="btn btn-danger float-end">Выйти</a>
-                </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

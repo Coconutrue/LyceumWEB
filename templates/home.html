@@ -33,10 +33,26 @@
                     <p class="mb-0 animate__animated animate__backInRight">{{ form.rules(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
                 </div>
             </div>
+            {% if current_user.is_authenticated %}
+            <div class="dropdown">
+                <button class="text-dropdown dropdown-toggle otstup mt-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="card-text-wrapper">
+                        <h3>{{current_user.name}}</h3>
+                    </div>
+                </button>
 
-            <div class="otstup mt-3">
-                <p class="mb-0 animate__animated animate__backInRight">{{ form.profile(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
+                <ul class="dropdown-menu dropdown-menu-left">
+                    <li>
+                        <p>{{ form.profile(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('logout') }}" class="btn btn-outline-warning btn-wide">Выйти</a>
+                    </li>
+                </ul>
             </div>
+            {% else %}
+                <p>{{ form.log_in(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
+            {% endif %}
         </nav>
     </form>
 </header>

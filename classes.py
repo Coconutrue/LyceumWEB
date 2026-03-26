@@ -17,11 +17,12 @@ class LoginForm(FlaskForm):
 class homeForm(FlaskForm):
     Lyceum = SubmitField('Lyceum?')
     register = SubmitField('Authorization')
-    profile = SubmitField('переделать под корень(профиль)')
+    profile = SubmitField('Личный кабинет')
     map = SubmitField('map')
     news = SubmitField('news')
     rules = SubmitField('rules')
     donation = SubmitField('donation')
+    log_in = SubmitField('Log In')
 
 class NewsForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
