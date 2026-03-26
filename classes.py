@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Optional
 
 
@@ -23,6 +23,10 @@ class homeForm(FlaskForm):
     rules = SubmitField('rules')
     donation = SubmitField('donation')
 
-
+class NewsForm(FlaskForm):
+    title = StringField('Заголовок', validators=[DataRequired()])
+    content = TextAreaField("Содержание")
+    is_private = BooleanField("Личное")
+    submit = SubmitField('Применить')
 
 
