@@ -29,4 +29,10 @@ class NewsForm(FlaskForm):
     is_private = BooleanField("Личное")
     submit = SubmitField('Применить')
 
-
+class ProfileForm(FlaskForm):
+    username = StringField('Имя пользователя', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    old_password = PasswordField('Старый пароль')
+    new_password = PasswordField('Новый пароль')
+    confirm_password = PasswordField('Подтверждение пароля')
+    submit = SubmitField('Сохранить изменения')
