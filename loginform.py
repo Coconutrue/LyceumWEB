@@ -68,7 +68,6 @@ def Monsters():
 def profile():
     form = ProfileForm()
     db_sess = db_session.create_session()
-
     if form.validate_on_submit():
         if form.submit.data:
             user = db_sess.query(User).filter(User.id == current_user.id).first()

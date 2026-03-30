@@ -34,7 +34,7 @@ class NewsForm(FlaskForm):
 class ProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
-    avatar = FileField('Avatar')
+    avatar = FileField('')
     old_password = PasswordField('Old password')
     new_password = PasswordField('New password')
     confirm_password = PasswordField('Password confirmation')
