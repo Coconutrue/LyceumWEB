@@ -17,7 +17,7 @@ class LoginForm(FlaskForm):
 class homeForm(FlaskForm):
     Lyceum = SubmitField('Lyceum?')
     register = SubmitField('Authorization')
-    profile = SubmitField('Личный кабинет')
+    profile = SubmitField('Personal account')
     map = SubmitField('map')
     news = SubmitField('news')
     rules = SubmitField('rules')
@@ -31,9 +31,9 @@ class NewsForm(FlaskForm):
     submit = SubmitField('Применить')
 
 class ProfileForm(FlaskForm):
-    username = StringField('Имя пользователя', validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
-    old_password = PasswordField('Старый пароль')
-    new_password = PasswordField('Новый пароль')
-    confirm_password = PasswordField('Подтверждение пароля')
-    submit = SubmitField('Сохранить изменения')
+    old_password = PasswordField('Old password')
+    new_password = PasswordField('New password')
+    confirm_password = PasswordField('Password confirmation')
+    submit = SubmitField('Save changes')

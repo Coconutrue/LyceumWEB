@@ -95,7 +95,7 @@ def profile():
         form.username.data = current_user.name
         form.email.data = current_user.email
 
-    return render_template('profile.html', form=form)
+    return render_template('profile.html',title=profile, form=form)
 
 
 @app.route('/logout')
