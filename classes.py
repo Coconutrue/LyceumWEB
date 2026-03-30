@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Optional
 
@@ -33,6 +34,7 @@ class NewsForm(FlaskForm):
 class ProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
+    avatar = FileField('Avatar')
     old_password = PasswordField('Old password')
     new_password = PasswordField('New password')
     confirm_password = PasswordField('Password confirmation')

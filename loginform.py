@@ -9,6 +9,13 @@ app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+import os
+import uuid
+from flask import Flask, request, render_template, redirect, abort, url_for, current_app
+from werkzeug.utils import secure_filename
+app.config['UPLOAD_FOLDER'] = 'static/uploads/avatars'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -55,14 +62,28 @@ def Monsters():
 
 """профиль и его изменение(на подобии новостей)"""
 
+
 @app.route("/profile", methods=['GET', 'POST'])
 @login_required
 def profile():
     form = ProfileForm()
     db_sess = db_session.create_session()
+
     if form.validate_on_submit():
         if form.submit.data:
             user = db_sess.query(User).filter(User.id == current_user.id).first()
+            if form.avatar.data:
+                file = form.avatar.data
+                if file and file.filename:
+                    ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'png'
+                    filename = f"{uuid.uuid4().hex}.{ext}"
+                    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(filepath)
+                    if user.avatar:
+                        old_path = os.path.join(app.config['UPLOAD_FOLDER'], user.avatar.split('/')[-1])
+                        if os.path.exists(old_path):
+                            os.remove(old_path)
+                    user.avatar = f"/static/uploads/avatars/{filename}"
             if form.username.data != user.name:
                 existing_user = db_sess.query(User).filter(User.name == form.username.data).first()
                 if existing_user and existing_user.id != user.id:
@@ -70,6 +91,7 @@ def profile():
                                            form=form,
                                            message="Это имя пользователя уже занято")
                 user.name = form.username.data
+
             if form.email.data != user.email:
                 existing_user = db_sess.query(User).filter(User.email == form.email.data).first()
                 if existing_user and existing_user.id != user.id:
@@ -77,6 +99,7 @@ def profile():
                                            form=form,
                                            message="Этот email уже используется")
                 user.email = form.email.data
+
             if form.new_password.data:
                 if not user.check_password(form.old_password.data):
                     return render_template('profile.html',
@@ -94,8 +117,7 @@ def profile():
     else:
         form.username.data = current_user.name
         form.email.data = current_user.email
-
-    return render_template('profile.html',title=profile, form=form)
+    return render_template('profile.html', title='Profile', form=form)
 
 
 @app.route('/logout')
