@@ -1,36 +1,68 @@
-.card-dark {
-    background-color: black;
-    color: #ffffff;
-    border: 1px solid #444;
+body {
+    background-image: url('/static/img/2025-10-11_14.21.27.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-.card-dark .card-header {
-    background-color: #1e1e1e;
-    border-bottom: 1px solid #444;
-    color: #ffffff;
+.animate__animated.animate__bounce {
+    --animate-duration: 3s;
 }
 
-.card-dark .form-label {
-    color: #e0e0e0;
+.card {
+    background-color: rgba(0, 0, 0, 0.26) !important;
+    backdrop-filter: blur(3px);
 }
 
-.card-dark .form-control {
-    background-color: black;
-    border-color: black;
-    color: #ffffff;
+.card.border-secondary {
+    background-color: rgba(0, 0, 0, 0.26) !important;
+    backdrop-filter: blur(3px);
 }
 
-.card-dark .form-control:focus {
-    background-color: #3d3d3d;
+
+
+.custom-border {
+    border-color: #696969;
+}
+
+.list-group-item {
+    background-color: transparent !important;
+    border: none;
+}
+
+.form-control {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    backdrop-filter: blur(1px);
+    color: #F0FFF0;
+}
+
+.form-control:focus {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    color: #F0FFF0;
     border-color: #ffc107;
-    color: #ffffff;
     box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
 }
 
-.card-dark .text-muted {
-    color: #adb5bd !important;
+h1, h2, h3, h4 {
+    margin-top: 15px;
+    font-family: monospace;
 }
 
-.card-dark hr {
-    background-color: #444;
+form {
+    margin-top: 100px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar-brand {
+    font-family: monospace;
+}
+
+.form-control::placeholder {
+    color: #A9A9A9;
+    opacity: 0.7;
+}
+
+.otstup {
+    margin-top: 8px
 }

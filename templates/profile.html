@@ -8,7 +8,7 @@
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style_profile.css">
     <title>{{title}}</title>
 </head>
 <body>
@@ -19,87 +19,84 @@
         </div>
     </nav>
 </header>
-
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card bg-dark text-white">
-                <div class="card-header bg-dark">
-                    <h3>User profile</h3>
+        <div class="hstack gap-2">
+              <div class="p-2">
+                <div class="col-md-8">
+                    <div class="card bg-dark text-white" style="width: 40rem;">
+                        <div class="card-header bg-dark">
+                            <h3>User profile</h3>
+                        </div>
+                        <div class="card-body">
+                            {% if message %}
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endif %}
+
+                            <form method="POST" action="">
+                                {{ form.hidden_tag() }}
+
+                                <div class="mb-3">
+                                    {{ form.username.label(class="form-label") }}
+                                    {{ form.username(class="form-control") }}
+                                    {% for error in form.username.errors %}
+                                        <div class="alert alert-danger mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="mb-3">
+                                    {{ form.email.label(class="form-label") }}
+                                    {{ form.email(class="form-control") }}
+                                    {% for error in form.email.errors %}
+                                        <div class="alert alert-danger mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                                <hr>
+                                <h5>Смена пароля</h5>
+                                <p style="color: #D3D3D3">Оставьте поля пустыми, если не хотите менять пароль</p>
+
+                                <div class="mb-3">
+                                    {{ form.old_password.label(class="form-label") }}
+                                    {{ form.old_password(class="form-control") }}
+                                    {% for error in form.old_password.errors %}
+                                        <div class="alert alert-danger mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="mb-3">
+                                    {{ form.new_password.label(class="form-label") }}
+                                    {{ form.new_password(class="form-control") }}
+                                    {% for error in form.new_password.errors %}
+                                        <div class="alert alert-danger mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="mb-3">
+                                    {{ form.confirm_password.label(class="form-label") }}
+                                    {{ form.confirm_password(class="form-control") }}
+                                    {% for error in form.confirm_password.errors %}
+                                        <div class="alert alert-danger mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    {{ form.submit(class="btn btn-outline-warning btn-wide") }}
+                                </div>
+                                <div class="d-grid gap-2 otstup">
+                                    <a href="{{ url_for('home') }}" class="btn btn-outline-warning btn-wide">Main page</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    {% if message %}
-                        <div class="alert alert-info alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    {% endif %}
-
-                    <form method="POST" action="">
-                        {{ form.hidden_tag() }}
-
-                        <div class="mb-3">
-                            {{ form.username.label(class="form-label") }}
-                            {{ form.username(class="form-control") }}
-                            {% for error in form.username.errors %}
-                                <div class="alert alert-danger mt-1">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="mb-3">
-                            {{ form.email.label(class="form-label") }}
-                            {{ form.email(class="form-control") }}
-                            {% for error in form.email.errors %}
-                                <div class="alert alert-danger mt-1">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-                        <hr>
-                        <h5>Смена пароля</h5>
-                        <p style="color: #D3D3D3">Оставьте поля пустыми, если не хотите менять пароль</p>
-
-                        <div class="mb-3">
-                            {{ form.old_password.label(class="form-label") }}
-                            {{ form.old_password(class="form-control") }}
-                            {% for error in form.old_password.errors %}
-                                <div class="alert alert-danger mt-1">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="mb-3">
-                            {{ form.new_password.label(class="form-label") }}
-                            {{ form.new_password(class="form-control") }}
-                            {% for error in form.new_password.errors %}
-                                <div class="alert alert-danger mt-1">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="mb-3">
-                            {{ form.confirm_password.label(class="form-label") }}
-                            {{ form.confirm_password(class="form-control") }}
-                            {% for error in form.confirm_password.errors %}
-                                <div class="alert alert-danger mt-1">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="d-grid gap-2">
-                            {{ form.submit(class="btn btn-outline-warning btn-wide") }}
-                        </div>
-                        <div class="d-grid gap-2 otstup">
-                            <a href="{{ url_for('home') }}" class="btn btn-outline-warning btn-wide">Main page</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
+              </div>
+              <div class="p-2 ms-auto">image</div>
         </div>
     </div>
-</div>
-
-<div class="upload-area">
-<input type="file" id="imageUpload" accept="image/jpeg, image/png, image/webp">
-<div id="previewContainer">
-    <p>Здесь появится предпросмотр изображения</p>
-</div>
 </div>
 
 
