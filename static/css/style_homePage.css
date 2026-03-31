@@ -31,6 +31,13 @@ body {
 .otstup {
     margin-right: 20px;
     }
+
+.otstup_t {
+    margin-right: 20px;
+    margin-top: 13px;
+    margin-bottom: 0px
+    }
+
 .btn-wide {
     width: 130px;
     min-width: 130px;

@@ -29,6 +29,7 @@ class NewsForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
     content = TextAreaField("Содержание")
     is_private = BooleanField("Личное")
+    image = FileField('Изображение', validators=[FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Загружено не изображение.')])
     submit = SubmitField('Применить')
 
 class ProfileForm(FlaskForm):

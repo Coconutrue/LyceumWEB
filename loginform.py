@@ -1,5 +1,5 @@
 from data import db_session
-from flask import Flask, request, render_template, redirect, abort, url_for
+from flask import Flask, request, render_template, redirect, abort, url_for, current_app
 from classes import LoginForm, NewsForm, homeForm, ProfileForm
 from data.users import User
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
@@ -13,9 +13,13 @@ import os
 import uuid
 from flask import Flask, request, render_template, redirect, abort, url_for, current_app
 from werkzeug.utils import secure_filename
+
 app.config['UPLOAD_FOLDER'] = 'static/uploads/avatars'
+app.config['NEWS_UPLOAD_FOLDER'] = 'static/uploads/news_images'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+os.makedirs(app.config['NEWS_UPLOAD_FOLDER'], exist_ok=True)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -35,25 +39,31 @@ def home():
             return redirect(url_for('login'))
     return render_template('home.html', title='Home', form=form)
 
+
 @app.route('/about_project', methods=['GET', 'POST'])
 def about_project():
     return render_template('about_project.html')
+
 
 @app.route('/interior_payments', methods=['GET', 'POST'])
 def interior_payments():
     return render_template('interior_payments.html')
 
+
 @app.route('/map', methods=['GET', 'POST'])
 def map():
     return render_template('map.html')
+
 
 @app.route('/rules', methods=['GET', 'POST'])
 def rules():
     return render_template('rules.html')
 
+
 @app.route('/locations', methods=['GET', 'POST'])
 def locations():
     return render_template('locations.html')
+
 
 @app.route('/What_is_this', methods=['GET', 'POST'])
 def Monsters():
@@ -128,6 +138,7 @@ def logout():
 
 """news"""
 
+
 @app.route("/news")
 def news():
     db_sess = db_session.create_session()
@@ -139,6 +150,7 @@ def news():
         news = db_sess.query(News).filter(News.is_private == False).all()
     return render_template("news.html", news=news)
 
+
 @app.route('/add_news', methods=['GET', 'POST'])
 @login_required
 def add_news():
@@ -149,6 +161,16 @@ def add_news():
         news.title = form.title.data
         news.content = form.content.data
         news.is_private = form.is_private.data
+
+        if form.image.data:
+            file = form.image.data
+            if file and file.filename:
+                ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'jpg'
+                filename = f"{uuid.uuid4().hex}.{ext}"
+                filepath = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], filename)
+                file.save(filepath)
+                news.image = f"/static/uploads/news_images/{filename}"
+
         current_user.news.append(news)
         db_sess.merge(current_user)
         db_sess.commit()
@@ -180,6 +202,21 @@ def edit_news(id):
             news.title = form.title.data
             news.content = form.content.data
             news.is_private = form.is_private.data
+
+            if form.image.data:
+                file = form.image.data
+                if file and file.filename:
+                    if news.image:
+                        old_path = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], news.image.split('/')[-1])
+                        if os.path.exists(old_path):
+                            os.remove(old_path)
+
+                    ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'jpg'
+                    filename = f"{uuid.uuid4().hex}.{ext}"
+                    filepath = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], filename)
+                    file.save(filepath)
+                    news.image = f"/static/uploads/news_images/{filename}"
+
             db_sess.commit()
             return redirect('/news')
         else:
@@ -189,18 +226,25 @@ def edit_news(id):
                            form=form
                            )
 
+
 @app.route('/news_delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def news_delete(id):
     db_sess = db_session.create_session()
     news = db_sess.query(News).filter(News.id == id, News.user == current_user).first()
     if news:
+        if news.image:
+            image_path = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], news.image.split('/')[-1])
+            if os.path.exists(image_path):
+                os.remove(image_path)
         db_sess.delete(news)
         db_sess.commit()
     return redirect('/news')
 
 
 """логин регистрация, вся фигня"""
+
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
@@ -242,7 +286,7 @@ def login():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email_log.data).first()
         if user and user.check_password(form.password_log.data):
-            login_user(user) #??? правильно ли оно тут стоит?
+            login_user(user)
             return redirect(url_for('home'))
         else:
             return render_template('login.html', title='Authorization',
@@ -250,6 +294,7 @@ def login():
                                    message="Invalid email or password")
 
     return render_template('login.html', title='Authorization', form=form)
+
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")

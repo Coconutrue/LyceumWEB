@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="/static/css/style_news.css">
     <title>{{title}}</title>
+    <style>
+        .news-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
 
@@ -30,8 +38,13 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h2 class="card-title">{{ item.title }}</h2>
+
+                {% if item.image %}
+                    <img src="{{ item.image }}" class="news-image" alt="Изображение новости">
+                {% endif %}
+
                 <p class="card-text">{{ item.content }}</p>
-                <p class="text-muted">Автор - {{ item.user.name }}, Дата написания - {{ item.created_date }}</p>
+                <p style="color: #808080">Автор - {{ item.user.name }}, Дата написания - {{ item.created_date }}</p>
 
                 {% if current_user.is_authenticated and current_user == item.user %}
                     <div class="mt-3">
