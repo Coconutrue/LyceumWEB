@@ -142,12 +142,10 @@ def logout():
 @app.route("/news")
 def news():
     db_sess = db_session.create_session()
-    if current_user.is_authenticated:
-        news = db_sess.query(News).filter(
-            (News.user == current_user) | (News.is_private == True)
-        ).all()
-    else:
-        news = db_sess.query(News).filter(News.is_private == False).all()
+    # Все новости видны всем
+    news = db_sess.query(News).all()
+    # Сортируем по дате (новые сверху)
+    news.sort(key=lambda x: x.created_date, reverse=True)
     return render_template("news.html", news=news)
 
 
@@ -160,8 +158,7 @@ def add_news():
         news = News()
         news.title = form.title.data
         news.content = form.content.data
-        news.is_private = form.is_private.data
-
+        news.category = form.category.data
         if form.image.data:
             file = form.image.data
             if file and file.filename:
@@ -177,7 +174,6 @@ def add_news():
         return redirect('/news')
     return render_template('add_news.html', title='Добавление новости', form=form)
 
-
 @app.route('/news/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_news(id):
@@ -190,7 +186,7 @@ def edit_news(id):
         if news:
             form.title.data = news.title
             form.content.data = news.content
-            form.is_private.data = news.is_private
+            form.category.data = news.category
         else:
             abort(404)
     if form.validate_on_submit():
@@ -201,8 +197,7 @@ def edit_news(id):
         if news:
             news.title = form.title.data
             news.content = form.content.data
-            news.is_private = form.is_private.data
-
+            news.category = form.category.data
             if form.image.data:
                 file = form.image.data
                 if file and file.filename:

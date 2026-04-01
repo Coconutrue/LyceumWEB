@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, RadioField
 from wtforms.validators import DataRequired, Optional
 
 
@@ -28,8 +28,13 @@ class homeForm(FlaskForm):
 class NewsForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
     content = TextAreaField("Содержание")
-    is_private = BooleanField("Личное")
-    image = FileField('Изображение', validators=[FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Загружено не изображение.')])
+    category = RadioField('Категория новости', choices=[
+        ('bug', '🐛 Найден баг'),
+        ('suggestion', '💡 Предложение изменений'),
+        ('other', '📝 Другое'),
+        ('advertisement', '📢 Реклама')
+    ], validators=[DataRequired()], default='other')
+    image = FileField('Изображение', validators=[FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Только изображения!')])
     submit = SubmitField('Применить')
 
 class ProfileForm(FlaskForm):

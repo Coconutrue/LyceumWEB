@@ -1,20 +1,17 @@
-import datetime
-import sqlalchemy
-from sqlalchemy import orm, Column, String
-
-from .db_session import SqlAlchemyBase
+from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from data.db_session import SqlAlchemyBase
 
 
 class News(SqlAlchemyBase):
     __tablename__ = 'news'
-    id = sqlalchemy.Column(sqlalchemy.Integer,
-                           primary_key=True, autoincrement=True)
-    title = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    content = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    created_date = sqlalchemy.Column(sqlalchemy.DateTime,
-                                     default=datetime.datetime.now)
-    is_private = sqlalchemy.Column(sqlalchemy.Boolean, default=True)
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String, nullable=True)
+    content = Column(Text, nullable=True)
+    created_date = Column(DateTime, default=datetime.now)
+    category = Column(String, default='other')
     image = Column(String, nullable=True)
-    user_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("users.id"))
-    user = orm.relationship('User')
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user = relationship('User', back_populates='news')

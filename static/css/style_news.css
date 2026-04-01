@@ -9,6 +9,10 @@ body {
     background-attachment: fixed;
 }
 
+.otstup {
+    margin-right: 100px
+}
+
 .navbar {
     position: relative;
 }
@@ -24,10 +28,10 @@ body {
 }
 
 .card-text{
-color: white
+    color: white
 }
 .card-title{
-color: white
+    color: white
 }
 
 .btn-wide {
@@ -48,7 +52,6 @@ color: white
     box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
 }
 
-
 .card {
     background-color: rgba(0, 0, 0, 0.26) !important;
     backdrop-filter: blur(3px);
@@ -57,4 +60,208 @@ color: white
 .card.border-secondary {
     background-color: rgba(0, 0, 0, 0.26) !important;
     backdrop-filter: blur(3px);
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.category-bug {
+    background: #dc3545;
+    color: white;
+}
+
+.category-suggestion {
+    background: #28a745;
+    color: white;
+}
+
+.category-other {
+    background: #6c757d;
+    color: white;
+}
+
+.category-advertisement {
+    background: #ffc107;
+    color: black;
+}
+
+.category-option {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.category-option:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: translateY(-2px);
+}
+
+input[type="radio"]:checked + .category-option {
+    border-color: #ffc107;
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.category-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.category-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffc107;
+}
+
+.category-tooltip {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 8px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    border-left: 3px solid #ffc107;
+}
+
+.news-image-container {
+    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.news-image {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.news-image:hover {
+    transform: scale(1.02);
+}
+
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.image-modal:target {
+    display: block;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.modal-close:hover {
+    color: #ffc107;
+}
+
+.filter-buttons {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,193,7,0.3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.filter-btn:hover {
+    background: rgba(255,193,7,0.8);
+    color: black;
+    border-color: #ffc107;
+}
+
+.news-card {
+    display: block;
+    animation: fadeIn 0.6s ease-out;
+}
+
+#show-all:target ~ .news-list .news-card,
+#show-bug:target ~ .news-list .news-card[data-category="bug"],
+#show-suggestion:target ~ .news-list .news-card[data-category="suggestion"],
+#show-other:target ~ .news-list .news-card[data-category="other"],
+#show-advertisement:target ~ .news-list .news-card[data-category="advertisement"] {
+    display: block;
+}
+
+#show-bug:target ~ .news-list .news-card:not([data-category="bug"]),
+#show-suggestion:target ~ .news-list .news-card:not([data-category="suggestion"]),
+#show-other:target ~ .news-list .news-card:not([data-category="other"]),
+#show-advertisement:target ~ .news-list .news-card:not([data-category="advertisement"]) {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .news-image {
+        max-height: 300px;
+    }
+
+    .category-badge {
+        font-size: 10px;
+        padding: 3px 8px;
+    }
+
+    .filter-btn {
+        padding: 5px 12px;
+        font-size: 12px;
+    }
 }

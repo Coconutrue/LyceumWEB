@@ -21,7 +21,7 @@
 </header>
 
 <div class="container mt-4">
-    <h1 class="mb-4" style="color: white">Добавление новости</h1>
+    <h1 class="mb-4" style="color: white">{{title}}</h1>
     <form action="" method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
@@ -41,6 +41,55 @@
             {% endfor %}
         </div>
 
+        <div class="mb-4">
+            <label class="form-label" style="color: white; font-size: 18px; margin-bottom: 15px;">
+                {{ form.category.label.text }}
+            </label>
+
+            {% for subfield in form.category %}
+                <div class="mb-3">
+                    <label style="cursor: pointer; display: block;">
+                        {{ subfield(class="form-check-input me-2", style="display: none;") }}
+                        <div class="category-option">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="category-title">
+                                        <span class="category-icon">
+                                            {% if subfield.data == 'bug' %}🐛
+                                            {% elif subfield.data == 'suggestion' %}💡
+                                            {% elif subfield.data == 'other' %}📝
+                                            {% elif subfield.data == 'advertisement' %}📢
+                                            {% endif %}
+                                        </span>
+                                        {% if subfield.data == 'bug' %}Найден баг
+                                        {% elif subfield.data == 'suggestion' %}Предложение изменений
+                                        {% elif subfield.data == 'other' %}Другое
+                                        {% elif subfield.data == 'advertisement' %}Реклама
+                                        {% endif %}
+                                    </div>
+                                    <div class="category-tooltip">
+                                        {% if subfield.data == 'bug' %}
+                                            📋 Подсказка: Опишите проблему максимально подробно. Укажите шаги для воспроизведения, ожидаемый и фактический результат. Приложите скриншоты, если возможно. Это поможет нам быстрее исправить ошибку!
+                                        {% elif subfield.data == 'suggestion' %}
+                                            💡 Подсказка: Расскажите о вашей идее подробно. Что именно вы хотите изменить? Почему это улучшит игру? Приведите примеры реализации. Чем детальнее описание, тем выше шанс, что ваше предложение будет рассмотрено!
+                                        {% elif subfield.data == 'other' %}
+                                            📝 Подсказка: Здесь вы можете написать любую информацию, не подходящую под другие категории. Вопросы, обсуждения, интересные факты и т.д. Постарайтесь быть конкретными!
+                                        {% elif subfield.data == 'advertisement' %}
+                                            📢 Подсказка: Разместите здесь информацию о вашем клане, предстоящих ивентах или соревнованиях. Укажите контактные данные, требования к участникам и другие важные детали. Реклама других проектов должна быть согласована с администрацией!
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            {% endfor %}
+
+            {% for error in form.category.errors %}
+                <div class="alert alert-danger mt-2">{{ error }}</div>
+            {% endfor %}
+        </div>
+
         <div class="mb-3">
             {{ form.image.label(class="form-label", style="color: white") }}
             {{ form.image(class="form-control", accept="image/*") }}
@@ -48,11 +97,6 @@
                 <div class="alert alert-danger mt-2">{{ error }}</div>
             {% endfor %}
             <small class="text-muted">Поддерживаемые форматы: JPG, PNG, GIF</small>
-        </div>
-
-        <div class="form-check mb-3">
-            {{ form.is_private(class="form-check-input") }}
-            {{ form.is_private.label(class="form-check-label", style="color: #ffc107") }}
         </div>
 
         {{ form.submit(class="btn btn-outline-warning btn-wide") }}
