@@ -294,3 +294,7 @@ def login():
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
     app.run(port=2010, host='127.0.0.1')
+
+
+
+    #tuna http 2010

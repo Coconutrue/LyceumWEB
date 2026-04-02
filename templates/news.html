@@ -31,7 +31,7 @@
 
     <div class="filter-buttons">
         <a href="#show-all" class="filter-btn">📋 Все новости</a>
-        <a href="#show-bug" class="filter-btn">🐛 Баги</a>
+        <a href="#show-bug" class="filter-btn">💢 Баги</a>
         <a href="#show-suggestion" class="filter-btn">💡 Предложения</a>
         <a href="#show-other" class="filter-btn">📝 Другое</a>
         <a href="#show-advertisement" class="filter-btn">📢 Реклама</a>
@@ -51,7 +51,7 @@
                         <div>
                             <h2 class="card-title" style="color: #ffc107; display: inline-block;">{{ item.title }}</h2>
                             <span class="category-badge category-{{ item.category }}">
-                                {% if item.category == 'bug' %}🐛 Найден баг
+                                {% if item.category == 'bug' %}💢 Найден баг
                                 {% elif item.category == 'suggestion' %}💡 Предложение изменений
                                 {% elif item.category == 'other' %}📝 Другое
                                 {% elif item.category == 'advertisement' %}📢 Реклама
@@ -89,7 +89,7 @@
                         <div class="mt-3">
                             <a href="/news/{{ item.id }}" class="btn btn-outline-warning btn-sm">✏️ Изменить</a>
                             <a href="/news_delete/{{ item.id }}" class="btn btn-outline-danger btn-sm"
-                               onclick="return confirm('Вы уверены?')">🗑️ Удалить</a>
+                               onclick="return confirm('Вы уверены?')">🗑️ Удалить</a>️️
                         </div>
                     {% endif %}
                 </div>
