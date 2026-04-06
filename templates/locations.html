@@ -1,10 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style_locations.css">
+    <title>{{title}}</title>
 </head>
 <body>
-locations
+<header>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <h3 class="animate__animated animate__backInLeft" style="color: #ffc107">Clan Wars</h3>
+        </div>
+        <div class="d-grid gap-2 otstup">
+            <a href="{{ url_for('home') }}" class="animate__animated animate__backInRight btn btn-outline-warning btn-wide">Main page</a>
+        </div>
+    </nav>
+</header>
+
+<div class="page-title">
+    <h2><i class="fas fa-map-marked-alt me-3"></i> Локации</h2>
+</div>
+
+<div style="margin-top: 45px;">
+    <div class="card card-transparent" style="width: 61rem; margin: auto;">
+        <div class="card-body">
+            <div style="color: white">
+                <p class="card-text">
+                    Наша карта, наполнена различными точками интереса. Это может быть и большой город,
+                    где вы можете найти торговцев, квесты, целые сюжетные линии. Деревни поменьше, где
+                    можно пополнить припасы и выполнить пару квестов, помогая жителям. Так и руины прошлого
+                    мира. Разрушенные поселения, подземелья и даже руины величественных замков.
+                    Исследуйте, раскрывайте лор и находите новое снаряжение.
+                    На скринах ниже вы можете увидеть несколько таких и узнать процесс их постройки.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="btn-group group-0" role="group" aria-label="Basic example">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade custom-carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/static/img/джунгли.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/джунгли1.png" class="d-block w-100" alt="...">
+
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/джунгли2.png" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="description-box">
+    <h5><i class="fas fa-scroll me-2"></i>Легенда этих мест</h5>
+    <p class="description-text">
+        Масштабная локация, представляющая из себя величественные леса в сердце которых лежат руины старого королевства.
+        Проходя сквозь эти джунгли, вы можете увидеть красивые пейзажи, руины некогда великой цивилизации и раскрыть тайны этого мира.
+        Но будьте осторожны, помимо разбойников, пришедших за добычей, растущие
+        в этих руинах растения обрели разум, и встали на защиту своего дома. Но кто знает, может там есть и что похуже...
+    </p>
+        <div class="btn-group-custom">
+            <div>
+                <h4 style="text-decoration: underline"><i class="fas fa-tree me-2"></i>Затерянные джунгли</h4>
+                <a href="#" class="btn-detail"><i class="fas fa-info-circle me-1"></i>Подробнее</a>
+            </div>
+            <div class="status-group">
+                <div class="div1">
+                    <img width="44" height="44" src="https://img.icons8.com/?size=100&id=7zSvenTA9TXu&format=png&color=000000" alt="filled-circle"/>
+                </div>
+                <div class="div1">
+                    <p>В разработке</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="btn-group group-0" role="group" aria-label="Basic example">
+    <div class="description-box">
+    <h5><i class="fas fa-scroll me-2"></i>Легенда этих мест</h5>
+    <p class="description-text">
+        Форт Аротел - одна из крепостей в Арестии, которая несколько лет держала десятки атак, осад и блокад.
+        Но не всё вечно, и в один ужасный день, крепость была захвачена. Лишь горстка солдат и генералов всё ещё пытаются держать оборону где-то на вершине строения.
+        Локация повышенной сложности, включает в себя десятки разных мобов и мини-боссов.
+    </p>
+        <div class="btn-group-custom">
+            <div>
+                <h4 style="text-decoration: underline"><i class="fas fa-city me-2"></i>Форт Аротел</h4>
+                <a href="#" class="btn-detail"><i class="fas fa-info-circle me-1"></i>Подробнее</a>
+            </div>
+            <div class="status-group">
+                <div class="div1">
+                    <img width="35" height="35" src="https://img.icons8.com/?size=100&id=103767&format=png&color=000000" alt="filled-circle"/>
+                </div>
+                <div class="div1">
+                    <p>Это завершенный объект</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="carouselExampleFade1" class="carousel slide carousel-fade custom-carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/static/img/форт-аротел0.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/форт-аротел1.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/форт-аротел.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/форт-аротел2.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/форт-аротел3.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/форт-аротел4.png" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade1" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade1" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<div class="btn-group group-0" role="group" aria-label="Basic example">
+    <div id="carouselExampleFade2" class="carousel slide carousel-fade custom-carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/static/img/Столица Тордфорда.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/Столица Тордфорда1.png" class="d-block w-100" alt="...">
+
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/Столица Тордфорда2.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/Столица Тордфорда3.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/Столица Тордфорда4.png" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade2" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade2" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="description-box">
+    <h5><i class="fas fa-scroll me-2"></i>Легенда этих мест</h5>
+    <p class="description-text">
+        Столица Тордфорда - огромный город, служащий домом для большинства людей живущих в королевстве.
+        Город был основан на руинах столицы древней империи Аратар, благодаря чему быстро обрёл большой размер.
+        Он поделён на несколько частей, в которых проживают люди разных сословий.
+        Начиная с бедного района, расплагающегося на руинах одного из фортпостов, заканчивая замком местного монарха, стоящим на горе над всем градом.
+    </p>
+        <div class="btn-group-custom">
+            <div>
+                <h4 style="text-decoration: underline"><i class="fas fa-city me-2"></i>Столица Тордфорда</h4>
+                <a href="#" class="btn-detail"><i class="fas fa-info-circle me-1"></i>Подробнее</a>
+            </div>
+            <div class="status-group">
+                <div class="div1">
+                    <img width="44" height="44" src="https://img.icons8.com/?size=100&id=7zSvenTA9TXu&format=png&color=000000" alt="filled-circle"/>
+                </div>
+                <div class="div1">
+                    <p>В разработке</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="info-blocks">
+    <div class="info-block">
+        <i class="fas fa-map-marker-alt"></i>
+        <p>12+ локаций</p>
+    </div>
+    <div class="info-block">
+        <i class="fas fa-treasure-chest"></i>
+        <p>Уникальный лут</p>
+    </div>
+    <div class="info-block">
+        <i class="fas fa-users"></i>
+        <p>Клановые войны</p>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -62,7 +62,7 @@ def rules():
 
 @app.route('/locations', methods=['GET', 'POST'])
 def locations():
-    return render_template('locations.html')
+    return render_template('locations.html', title='Locations')
 
 
 @app.route('/What_is_this', methods=['GET', 'POST'])
@@ -70,9 +70,8 @@ def Monsters():
     return render_template('Monsters.html')
 
 
+
 """профиль и его изменение(на подобии новостей)"""
-
-
 @app.route("/profile", methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -137,14 +136,10 @@ def logout():
 
 
 """news"""
-
-
 @app.route("/news")
 def news():
     db_sess = db_session.create_session()
-    # Все новости видны всем
     news = db_sess.query(News).all()
-    # Сортируем по дате (новые сверху)
     news.sort(key=lambda x: x.created_date, reverse=True)
     return render_template("news.html", news=news)
 
