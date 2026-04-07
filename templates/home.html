@@ -1,127 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous">
+          rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/css/style_homePage.css">
-    <title>Home page</title>
+    <title>Clan Wars</title>
 </head>
 <body>
+
 <header>
     <form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
+        {{ form.hidden_tag() }}
         <nav class="navbar navbar-expand-lg bg-dark">
-            <div class="container-fluid w-100 justify-content-center">
-                <div class="otstup_ mt-1">
-                    <h3 class="mb-1 animate__animated animate__backInLeft" style="color: #ffc107">Clan Wars</h3>
-                </div>
-                <div class="otstup mt-3">
-                    <p class="mb-0 animate__animated animate__backInLeft" >{{ form.donation(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
-                </div>
-                <div class="otstup mt-3">
-                    <p class="mb-0 animate__animated animate__fadeInDown">{{ form.map(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
-                </div>
-                <div class="otstup mt-3">
-                    <p class="mb-0 animate__animated animate__fadeInDown">{{ form.news(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
-                </div>
-                <div class="otstup mt-3">
-                    <p class="mb-0 animate__animated animate__backInRight">{{ form.rules(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
-                </div>
-            </div>
-            {% if current_user.is_authenticated %}
-            <div class="dropdown">
-                <button class="text-dropdown dropdown-toggle otstup mt-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="card-text-wrapper">
-                        <h3>{{current_user.name}}</h3>
+            <div class="container-fluid w-100">
+                <div class="d-flex align-items-center flex-wrap">
+                    <div class="otstup_">
+                        <h3 class="mb-1 animate__animated animate__backInLeft logo-text">Clan Wars</h3>
                     </div>
-                </button>
+                    <div class="nav-buttons-wrapper">
+                        <div class="otstup mt-3">
+                            <p class="mb-0">{{ form.donation(type="submit", class="btn btn-outline-warning btn-wide nav-btn") }}</p>
+                        </div>
+                        <div class="otstup mt-3">
+                            <p class="mb-0">{{ form.map(type="submit", class="btn btn-outline-warning btn-wide nav-btn") }}</p>
+                        </div>
+                        <div class="otstup mt-3">
+                            <p class="mb-0">{{ form.news(type="submit", class="btn btn-outline-warning btn-wide nav-btn") }}</p>
+                        </div>
+                        <div class="otstup mt-3">
+                            <p class="mb-0">{{ form.rules(type="submit", class="btn btn-outline-warning btn-wide nav-btn") }}</p>
+                        </div>
+                    </div>
+                </div>
 
-                <ul class="dropdown-menu dropdown-menu-left">
-                    <li>
-                        <p>{{ form.profile(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('logout') }}" class="btn btn-outline-warning btn-wide">Log out</a>
-                    </li>
-                </ul>
+                <div class="user-section">
+                    {% if current_user.is_authenticated %}
+                    <div class="dropdown">
+                        <button class="text-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-crown me-1"></i>
+                            <span class="user-name">{{ current_user.name }}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <p class="mb-0">{{ form.profile(type="submit", class="btn btn-outline-warning btn-wide dropdown-btn") }}</p>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('logout') }}" class="btn btn-outline-warning btn-wide dropdown-btn">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Log out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% else %}
+                        <p class="mb-0 otstup_t">{{ form.log_in(type="submit", class="btn btn-outline-warning btn-wide login-btn") }}</p>
+                    {% endif %}
+                </div>
             </div>
-            {% else %}
-                <p class="mb-0 otstup_t">{{ form.log_in(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
-            {% endif %}
         </nav>
     </form>
 </header>
 
-<div class="text-center mb-2">
-    <h3 class="t mb-1" style="color: white">Welcome to the project!</h3>
-    <hr class="border-1 w-75 mx-auto mt-0" style="color: white">
+<div class="text-center hero-section">
+    <h3 class="mb-1 welcome-title animate__animated animate__fadeInDown">Welcome to the realm of <span class="highlight">Clan Wars</span></h3>
+    <hr class="custom-hr mx-auto">
 </div>
 
-
 <div class="b">
-<div class="container mt-4">
-    <div class="row g-5">
-        <!-- Левый столбец -->
-        <div class="col-md-6">
-            <div class="d-flex flex-column gap-4">
-                <div class="animate__animated animate__zoomIn">
-                    <a href="{{ url_for('about_project') }}" class="card card_min text-bg-dark text-decoration-none hover-card">
-                        <img src="/static/img/причал.png" class="card-img" alt="...">
-                        <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                            <div class="card-text-wrapper">
-                                <h2 style="color: white">About project</h2>
+    <div class="container mt-4">
+        <div class="row g-5">
+            <!-- Левый столбец -->
+            <div class="col-md-6">
+                <div class="d-flex flex-column gap-4">
+                    <div class="animate__animated animate__zoomIn">
+                        <a href="{{ url_for('about_project') }}" class="card card_min text-bg-dark text-decoration-none hover-card">
+                            <img src="/static/img/причал.png" class="card-img" alt="About project">
+                            <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                <div class="card-text-wrapper">
+                                    <h2><i class="fas fa-scroll me-2"></i>About project</h2>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="animate__animated animate__zoomIn">
-                    <a href="{{ url_for('interior_payments') }}" class="card card_max text-bg-dark text-decoration-none hover-card">
-                        <img src="/static/img/лесок.png" class="card-img" alt="...">
-                        <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                            <div class="card-text-wrapper">
-                                <h2 style="color: white">Interior and payments</h2>
+                        </a>
+                    </div>
+                    <div class="animate__animated animate__zoomIn">
+                        <a href="{{ url_for('interior_payments') }}" class="card card_max text-bg-dark text-decoration-none hover-card">
+                            <img src="/static/img/лесок.png" class="card-img" alt="Interior and payments">
+                            <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                <div class="card-text-wrapper">
+                                    <h2><i class="fas fa-gem me-2"></i>Interior and payments</h2>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Правый столбец -->
-        <div class="col-md-6">
-            <div class="d-flex flex-column gap-4">
-                <div class="animate__animated animate__zoomIn">
-                    <a href="{{ url_for('locations') }}" class="card card_max text-bg-dark text-decoration-none hover-card">
-                        <img src="/static/img/храм.png" class="card-img" alt="...">
-                        <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                            <div class="card-text-wrapper">
-                                <h2 style="color: white">Locations</h2>
+            <!-- Правый столбец -->
+            <div class="col-md-6">
+                <div class="d-flex flex-column gap-4">
+                    <div class="animate__animated animate__zoomIn">
+                        <a href="{{ url_for('locations') }}" class="card card_max text-bg-dark text-decoration-none hover-card">
+                            <img src="/static/img/храм.png" class="card-img" alt="Locations">
+                            <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                <div class="card-text-wrapper">
+                                    <h2><i class="fas fa-map-marked-alt me-2"></i>Locations</h2>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="animate__animated animate__zoomIn">
-                    <a href="{{ url_for('Monsters') }}" class="card card_min text-bg-dark text-decoration-none hover-card">
-                        <img src="/static/img/монстры/орк_с_рогами.png" class="card-img" alt="...">
-                        <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                            <div class="card-text-wrapper">
-                                <h2 style="color: white">Mobs and bosses</h2>
+                        </a>
+                    </div>
+                    <div class="animate__animated animate__zoomIn">
+                        <a href="{{ url_for('Monsters') }}" class="card card_min text-bg-dark text-decoration-none hover-card">
+                            <img src="/static/img/монстры/орк_с_рогами.png" class="card-img" alt="Mobs and bosses">
+                            <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                <div class="card-text-wrapper">
+                                    <h2><i class="fas fa-dragon me-2"></i>Mobs and bosses</h2>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+<script>
+    (function addNavIcons() {
+        const btns = {
+            donation: ' Donation',
+            map: ' Map',
+            news: ' News',
+            rules: ' Rules',
+            log_in: ' Log in',
+            profile: '👤 Profile'
+        };
+
+        for (const [name, value] of Object.entries(btns)) {
+            const btn = document.querySelector(`input[value="${name}"]`);
+            if (btn) btn.value = value;
+        }
+    })();
+</script>
 </body>
 </html>
