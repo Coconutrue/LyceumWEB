@@ -16,7 +16,7 @@ from werkzeug.utils import secure_filename
 
 app.config['UPLOAD_FOLDER'] = 'static/uploads/avatars'
 app.config['NEWS_UPLOAD_FOLDER'] = 'static/uploads/news_images'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['NEWS_UPLOAD_FOLDER'], exist_ok=True)
 

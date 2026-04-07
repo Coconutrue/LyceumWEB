@@ -1,10 +1,11 @@
 body {
-    background-image: url('/static/img/2025-10-11_14.21.27.png');
+    background-image: url('/static/img/фон.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
 
 .animate__animated.animate__bounce {
     --animate-duration: 3s;
