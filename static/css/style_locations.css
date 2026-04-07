@@ -17,6 +17,41 @@ body {
 }
 
 
+.navbar {
+    background: rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 193, 7, 0.35);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    padding: 0.75rem 2rem;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.logo-text {
+    font-weight: 800;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #ffc107, #ffb347, #ffdd88);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
+    transition: all 0.3s ease;
+}
+
+.logo-text:hover {
+    text-shadow: 0 0 25px rgba(255, 193, 7, 0.6);
+    transform: scale(1.02);
+}
+
+
+
 .otstup {
     margin-right: 100px;
 }
@@ -149,7 +184,6 @@ body {
     margin-top: 55px;
 }
 
-/* Стили для карточки с описанием */
 .card-transparent {
     background: rgba(0, 0, 0, 0.65) !important;
     backdrop-filter: blur(12px);
@@ -175,7 +209,6 @@ body {
     color: #ffc107;
 }
 
-/* Стили для кнопки подробнее */
 .btn-detail {
     background: linear-gradient(135deg, #ffc107, #ff8c00);
     border: none;
@@ -197,7 +230,6 @@ body {
     background: linear-gradient(135deg, #ffd633, #ff9f00);
 }
 
-/* Стили для статус-группы */
 .status-group {
     display: inline-flex;
     align-items: center;
@@ -230,7 +262,6 @@ body {
     color: #a8e6cf;
 }
 
-/* Стили для описания под каруселью */
 .description-box {
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
@@ -264,7 +295,6 @@ body {
     margin: 0;
 }
 
-/* Заголовок страницы */
 .page-title {
     text-align: center;
     margin-top: 45px;
@@ -285,7 +315,6 @@ body {
     border-bottom: 3px solid #ffc107;
 }
 
-/* Инфо-блоки под описание */
 .info-blocks {
     display: flex;
     justify-content: center;
@@ -330,7 +359,6 @@ body {
     margin-top: 150px
 }
 
-/* Анимация появления */
 @keyframes fadeInUp {
     from {
         opacity: 0;

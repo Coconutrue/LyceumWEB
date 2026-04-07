@@ -1,112 +1,153 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/css/style_news.css">
     <title>{{title}}</title>
 </head>
 <body>
 
 <header>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <h3 class="animate__animated animate__backInLeft" style="color: #ffc107">Clan Wars</h3>
-        </div>
-        <div class="d-grid gap-2 otstup">
-            <a href="{{ url_for('home') }}" class="animate__animated animate__backInRight btn btn-outline-warning btn-wide">Main page</a>
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <h3 class="animate__animated animate__backInLeft logo-text mb-0">Clan Wars</h3>
+            </div>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-warning btn-wide">
+                    <i class="fas fa-home me-2"></i>Main page
+                </a>
+            </div>
         </div>
     </nav>
 </header>
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 style="color: white">Новости</h1>
-        {% if current_user.is_authenticated %}
-            <a href="/add_news" class="btn btn-outline-warning">➕ Добавить новость</a>
-        {% endif %}
-    </div>
+<main>
+    <div class="container mt-4">
+        <div class="hero-section-news mb-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <h1 class="page-title"><i class="fas fa-newspaper me-3"></i>Новости</h1>
+                {% if current_user.is_authenticated %}
+                    <a href="/add_news" class="btn btn-outline-warning btn-add-news">
+                        <i class="fas fa-plus-circle me-2"></i>Добавить новость
+                    </a>
+                {% endif %}
+            </div>
+            <hr class="custom-hr-news">
+        </div>
 
-    <div class="filter-buttons">
-        <a href="#show-all" class="filter-btn">📋 Все новости</a>
-        <a href="#show-bug" class="filter-btn">💢 Баги</a>
-        <a href="#show-suggestion" class="filter-btn">💡 Предложения</a>
-        <a href="#show-other" class="filter-btn">📝 Другое</a>
-        <a href="#show-advertisement" class="filter-btn">📢 Реклама</a>
-    </div>
+        <div class="filter-buttons">
+            <a href="#show-all" class="filter-btn active-filter" data-filter="all">
+                <i class="fas fa-globe me-1"></i> Все новости
+            </a>
+            <a href="#show-bug" class="filter-btn" data-filter="bug">
+                <i class="fas fa-bug me-1"></i> Баги
+            </a>
+            <a href="#show-suggestion" class="filter-btn" data-filter="suggestion">
+                <i class="fas fa-lightbulb me-1"></i> Предложения
+            </a>
+            <a href="#show-other" class="filter-btn" data-filter="other">
+                <i class="fas fa-comment me-1"></i> Другое
+            </a>
+            <a href="#show-advertisement" class="filter-btn" data-filter="advertisement">
+                <i class="fas fa-megaphone me-1"></i> Реклама
+            </a>
+        </div>
 
-    <div id="show-all"></div>
-    <div id="show-bug"></div>
-    <div id="show-suggestion"></div>
-    <div id="show-other"></div>
-    <div id="show-advertisement"></div>
+        <div id="show-all"></div>
+        <div id="show-bug"></div>
+        <div id="show-suggestion"></div>
+        <div id="show-other"></div>
+        <div id="show-advertisement"></div>
 
-    <div class="news-list">
-        {% for item in news %}
-            <div class="card mb-4 news-card" data-category="{{ item.category }}">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div>
-                            <h2 class="card-title" style="color: #ffc107; display: inline-block;">{{ item.title }}</h2>
-                            <span class="category-badge category-{{ item.category }}">
-                                {% if item.category == 'bug' %}💢 Найден баг
-                                {% elif item.category == 'suggestion' %}💡 Предложение изменений
-                                {% elif item.category == 'other' %}📝 Другое
-                                {% elif item.category == 'advertisement' %}📢 Реклама
-                                {% endif %}
+        <div class="news-list">
+            {% for item in news %}
+                <div class="card mb-4 news-card" data-category="{{ item.category }}">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+                            <div class="d-flex align-items-center flex-wrap gap-2">
+                                <h2 class="card-title">{{ item.title }}</h2>
+                                <span class="category-badge category-{{ item.category }}">
+                                    {% if item.category == 'bug' %}
+                                        <i class="fas fa-bug me-1"></i> Найден баг
+                                    {% elif item.category == 'suggestion' %}
+                                        <i class="fas fa-lightbulb me-1"></i> Предложение изменений
+                                    {% elif item.category == 'other' %}
+                                        <i class="fas fa-comment me-1"></i> Другое
+                                    {% elif item.category == 'advertisement' %}
+                                        <i class="fas fa-megaphone me-1"></i> Реклама
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <span class="date-badge">
+                                <i class="far fa-calendar-alt me-1"></i>
+                                {{ item.created_date.strftime('%d.%m.%Y') }}
                             </span>
                         </div>
-                        <span class="badge bg-secondary">{{ item.created_date.strftime('%d.%m.%Y') }}</span>
-                    </div>
 
-                    {% if item.image %}
-                        <div class="news-image-container">
-                            <a href="#modal-{{ item.id }}" style="text-decoration: none;">
-                                <img src="{{ item.image }}"
-                                     class="news-image"
-                                     alt="Изображение новости">
+                        {% if item.image %}
+                            <div class="news-image-container">
+                                <a href="#modal-{{ item.id }}" class="image-link">
+                                    <img src="{{ item.image }}"
+                                         class="news-image"
+                                         alt="Изображение новости"
+                                         loading="lazy">
+                                    <div class="image-overlay">
+                                        <i class="fas fa-search-plus"></i>
+                                    </div>
+                                </a>
+                            </div>
+                            <div id="modal-{{ item.id }}" class="image-modal">
+                                <a href="#" class="modal-close">&times;</a>
+                                <img class="modal-content" src="{{ item.image }}">
+                            </div>
+                        {% endif %}
+
+                        <p class="card-text">{{ item.content }}</p>
+
+                        <div class="news-footer">
+                            <div class="author-info">
+                                <i class="fas fa-user-circle me-2"></i>
+                                <span>Автор: {{ item.user.name }}</span>
+                            </div>
+                        </div>
+
+                        {% if current_user.is_authenticated and current_user == item.user %}
+                            <div class="action-buttons mt-3">
+                                <a href="/news/{{ item.id }}" class="btn btn-outline-warning btn-sm">
+                                    <i class="fas fa-edit me-1"></i> Изменить
+                                </a>
+                                <a href="/news_delete/{{ item.id }}" class="btn btn-outline-danger btn-sm"
+                                   onclick="return confirm('Вы уверены, что хотите удалить эту новость?')">
+                                    <i class="fas fa-trash-alt me-1"></i> Удалить
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-content">
+                        <i class="fas fa-newspaper empty-icon"></i>
+                        <h3>Новостей пока нет</h3>
+                        {% if current_user.is_authenticated %}
+                            <a href="/add_news" class="btn btn-outline-warning mt-3">
+                                <i class="fas fa-plus-circle me-2"></i>Создать первую новость
                             </a>
-                        </div>
-                     <div id="modal-{{ item.id }}" class="image-modal">
-                            <a href="#" class="modal-close">&times;</a>
-                            <img class="modal-content" src="{{ item.image }}">
-                        </div>
-                    {% endif %}
-
-                    <p class="card-text" style="color: #e0e0e0; line-height: 1.6;">{{ item.content }}</p>
-
-                    <div class="mt-3 pt-2 border-top border-secondary">
-                        <p class="mb-2" style="color: #808080">
-                            <small>
-                                Автор: {{ item.user.name }} |
-                            </small>
-                        </p>
+                        {% endif %}
                     </div>
-
-                    {% if current_user.is_authenticated and current_user == item.user %}
-                        <div class="mt-3">
-                            <a href="/news/{{ item.id }}" class="btn btn-outline-warning btn-sm">✏️ Изменить</a>
-                            <a href="/news_delete/{{ item.id }}" class="btn btn-outline-danger btn-sm"
-                               onclick="return confirm('Вы уверены?')">🗑️ Удалить</a>️️
-                        </div>
-                    {% endif %}
                 </div>
-            </div>
-        {% else %}
-            <div class="card">
-                <div class="card-body text-center">
-                    <p class="card-text" style="color: white;">Новостей пока нет</p>
-                    {% if current_user.is_authenticated %}
-                        <a href="/add_news" class="btn btn-outline-warning">Создать первую новость</a>
-                    {% endif %}
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</div>
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
