@@ -1,10 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style_locations.css">
+    <title>{{title}}</title>
 </head>
 <body>
-about_project
+<header>
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <h3 class="animate__animated animate__backInLeft logo-text mb-0">Clan Wars</h3>
+            </div>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-warning btn-wide">
+                    <i class="fas fa-home me-2"></i>Main page
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="page-title">
+    <h2><i class="fas fa-map-marked-alt me-3"></i> О проекте:</h2>
+</div>
+
+<div style="margin-top: 45px;">
+    <div class="card card-transparent" style="width: 61rem; margin: auto;">
+        <div class="card-body">
+            <div style="color: white">
+                <h4 class="card-text">
+                    Clan wars - Это майнкрафт сервер, нацеленный на исследование мира и расскрытие его
+                    лора. Помимо живописных пейзажей и различных строений, на вашем пути будут встреча-
+                    ться множество преград, как разбойники, которые расселились по всему миру, так и более
+                    древние и опасные существа...
+                </h4>
+                <h4 class="card-text" style="margin-top: 15px">
+                    Мы, изменяем обычную карту 5 на 5 тысяч блоков до неузноваемости. Никаких маленьких
+                    ванильных деревьев и заурядных данжей. Перед вами выбор - следовать основной сюжетной
+                    линии, и посетить основные локации, либо-же, окунутся в мир с головой, узнать все его тайны,
+                    и открыть новые концовки.
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="btn-group group-0" role="group" aria-label="Basic example">
+    <div>какашка</div>
+    <div>вторая какашка</div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
