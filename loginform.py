@@ -42,7 +42,7 @@ def home():
 
 @app.route('/about_project', methods=['GET', 'POST'])
 def about_project():
-    return render_template('about_project.html')
+    return render_template('about_project.html', title='About Project')
 
 
 @app.route('/interior_payments', methods=['GET', 'POST'])
