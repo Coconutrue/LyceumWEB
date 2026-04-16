@@ -1,19 +1,21 @@
+from sqlalchemy.sql.coercions import expect
+
 from data import db_session
 from flask import Flask, request, render_template, redirect, abort, url_for, current_app
 from classes import LoginForm, NewsForm, homeForm, ProfileForm
 from data.users import User
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 from data.News import News
-
-app = Flask(__name__)
-login_manager = LoginManager()
-login_manager.init_app(app)
-app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+from PIL import Image
 import os
 import uuid
 from flask import Flask, request, render_template, redirect, abort, url_for, current_app
 from werkzeug.utils import secure_filename
 
+app = Flask(__name__)
+login_manager = LoginManager()
+login_manager.init_app(app)
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['UPLOAD_FOLDER'] = 'static/uploads/avatars'
 app.config['NEWS_UPLOAD_FOLDER'] = 'static/uploads/news_images'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -80,18 +82,6 @@ def profile():
     if form.validate_on_submit():
         if form.submit.data:
             user = db_sess.query(User).filter(User.id == current_user.id).first()
-            if form.avatar.data:
-                file = form.avatar.data
-                if file and file.filename:
-                    ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'png'
-                    filename = f"{uuid.uuid4().hex}.{ext}"
-                    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                    file.save(filepath)
-                    if user.avatar:
-                        old_path = os.path.join(app.config['UPLOAD_FOLDER'], user.avatar.split('/')[-1])
-                        if os.path.exists(old_path):
-                            os.remove(old_path)
-                    user.avatar = f"/static/uploads/avatars/{filename}"
             if form.username.data != user.name:
                 existing_user = db_sess.query(User).filter(User.name == form.username.data).first()
                 if existing_user and existing_user.id != user.id:
@@ -154,20 +144,36 @@ def add_news():
         news.title = form.title.data
         news.content = form.content.data
         news.category = form.category.data
+        news.user_id = current_user.id
         if form.image.data:
             file = form.image.data
             if file and file.filename:
+                allowed_ext = {'jpg', 'jpeg', 'png', 'gif'}
                 ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'jpg'
+                if ext not in allowed_ext:
+                    return render_template('add_news.html', title='Добавление новости', form=form)
                 filename = f"{uuid.uuid4().hex}.{ext}"
                 filepath = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], filename)
                 file.save(filepath)
+                if not check_img(filepath):
+                    os.remove(filepath)
+                    form.image.errors.append("Файл повреждён или не является изображением")
+                    return render_template('add_news.html', title='Добавление новости', form=form)
                 news.image = f"/static/uploads/news_images/{filename}"
-
-        current_user.news.append(news)
-        db_sess.merge(current_user)
+        db_sess.add(news)
         db_sess.commit()
         return redirect('/news')
     return render_template('add_news.html', title='Добавление новости', form=form)
+
+def check_img(filename):
+    try:
+        with Image.open(f"{filename}") as im:
+            im.verify()
+        return True
+    except:
+        return False
+
+
 
 @app.route('/news/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -288,7 +294,7 @@ def login():
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
-    app.run(port=2010, host='127.0.0.1')
+    app.run(port=2010, host='127.0.0.1', debug=True)
 
 
 
