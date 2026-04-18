@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, RadioField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, RadioField
 from wtforms.validators import DataRequired, Optional
 
 
@@ -29,10 +29,10 @@ class NewsForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
     content = TextAreaField("Содержание")
     category = RadioField('Категория новости', choices=[
-        ('bug', '🐛 Найден баг'),
-        ('suggestion', '💡 Предложение изменений'),
-        ('other', '📝 Другое'),
-        ('advertisement', '📢 Реклама')
+        ('bug', 'Найден баг'),
+        ('suggestion', ' Предложение изменений'),
+        ('other', 'Другое'),
+        ('advertisement', 'Реклама')
     ], validators=[DataRequired()], default='other')
     image = FileField('Изображение', validators=[FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Только изображения!')])
     submit = SubmitField('Применить')

@@ -100,8 +100,8 @@ form {
 
 
 .form-control::placeholder {
-    color: #A9A9A9;           /* желтый цвет */
-    opacity: 0.7;             /* прозрачность (опционально) */
+    color: #A9A9A9;
+    opacity: 0.7;
 }
 
 .otstup {

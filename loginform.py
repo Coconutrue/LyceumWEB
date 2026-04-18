@@ -1,7 +1,4 @@
-from sqlalchemy.sql.coercions import expect
-
 from data import db_session
-from flask import Flask, request, render_template, redirect, abort, url_for, current_app
 from classes import LoginForm, NewsForm, homeForm, ProfileForm
 from data.users import User
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
@@ -9,8 +6,8 @@ from data.News import News
 from PIL import Image
 import os
 import uuid
-from flask import Flask, request, render_template, redirect, abort, url_for, current_app
-from werkzeug.utils import secure_filename
+from flask import Flask, request, render_template, redirect, abort, url_for
+
 
 app = Flask(__name__)
 login_manager = LoginManager()
