@@ -142,24 +142,41 @@ def add_news():
         news.content = form.content.data
         news.category = form.category.data
         news.user_id = current_user.id
-        if form.image.data:
-            file = form.image.data
-            if file and file.filename:
-                allowed_ext = {'jpg', 'jpeg', 'png', 'gif'}
-                ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'jpg'
-                if ext not in allowed_ext:
-                    return render_template('add_news.html', title='Добавление новости', form=form)
-                filename = f"{uuid.uuid4().hex}.{ext}"
-                filepath = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], filename)
-                file.save(filepath)
-                if not check_img(filepath):
-                    os.remove(filepath)
-                    form.image.errors.append("Файл повреждён или не является изображением")
-                    return render_template('add_news.html', title='Добавление новости', form=form)
-                news.image = f"/static/uploads/news_images/{filename}"
-        db_sess.add(news)
-        db_sess.commit()
-        return redirect('/news')
+        saved_filepath = None
+        try:
+            if form.image.data:
+                file = form.image.data
+                if file and file.filename:
+                    allowed_ext = {'jpg', 'jpeg', 'png', 'gif'}
+                    ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'jpg'
+                    if ext not in allowed_ext:
+                        form.image.errors.append("Не поддерживаемый формат")
+                        return render_template('add_news.html', title='Добавление новости', form=form)
+
+                    filename = f"{uuid.uuid4().hex}.{ext}"
+                    filepath = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], filename)
+                    file.save(filepath)
+                    saved_filepath = filepath
+                    if not check_r(filepath):
+                        os.remove(filepath)
+                        form.image.errors.append("Файл слишком большой")
+                        return render_template('add_news.html', title='Добавление новости', form=form)
+
+                    if not check_img(filepath):
+                        os.remove(filepath)
+                        form.image.errors.append("Файл повреждён или не является изображением")
+                        return render_template('add_news.html', title='Добавление новости', form=form)
+
+                    news.image = f"/static/uploads/news_images/{filename}"
+            db_sess.add(news)
+            db_sess.commit()
+            return redirect('/news')
+        except:
+            db_sess.rollback()
+            if saved_filepath:
+                os.remove(saved_filepath)
+            form.image.errors.append("Ошибка сервера при сохранении")
+            return render_template('add_news.html', title='Добавление новости', form=form)
     return render_template('add_news.html', title='Добавление новости', form=form)
 
 def check_img(filename):
@@ -169,6 +186,15 @@ def check_img(filename):
         return True
     except:
         return False
+
+def check_r(filename):
+    try:
+        image = Image.open(f"{filename}")
+        width, height = image.size
+        if width > 4000 or height > 4000:
+            return False
+    except:
+        return True
 
 
 
@@ -196,22 +222,41 @@ def edit_news(id):
             news.title = form.title.data
             news.content = form.content.data
             news.category = form.category.data
-            if form.image.data:
-                file = form.image.data
-                if file and file.filename:
+            saved_filepath = None
+            old_path = None
+            try:
+                if form.image.data and form.image.data.filename:
+                    file = form.image.data
                     if news.image:
                         old_path = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], news.image.split('/')[-1])
-                        if os.path.exists(old_path):
-                            os.remove(old_path)
-
-                    ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'jpg'
-                    filename = f"{uuid.uuid4().hex}.{ext}"
-                    filepath = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], filename)
-                    file.save(filepath)
-                    news.image = f"/static/uploads/news_images/{filename}"
-
-            db_sess.commit()
-            return redirect('/news')
+                    if file and file.filename:
+                        allowed_ext = {'jpg', 'jpeg', 'png', 'gif'}
+                        ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'jpg'
+                        if ext not in allowed_ext:
+                            return render_template('add_news.html', title='Редактирование новости', form=form)
+                        filename = f"{uuid.uuid4().hex}.{ext}"
+                        filepath = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], filename)
+                        saved_filepath = filepath
+                        file.save(filepath)
+                        if not check_r(filepath):
+                            os.remove(filepath)
+                            form.image.errors.append("Файл слишком большой")
+                            return render_template('add_news.html', title='Редактирование новости', form=form)
+                        if not check_img(filepath):
+                            os.remove(filepath)
+                            form.image.errors.append("Файл повреждён или не является изображением")
+                            return render_template('add_news.html', title='Редактирование новости', form=form)
+                        news.image = f"/static/uploads/news_images/{filename}"
+                db_sess.commit()
+                if saved_filepath and old_path and os.path.exists(old_path):
+                    os.remove(old_path)
+                return redirect('/news')
+            except:
+                db_sess.rollback()
+                if saved_filepath:
+                    os.remove(saved_filepath)
+                form.image.errors.append("Ошибка сервера при сохранении")
+                return render_template('add_news.html', title='Редактирование новости', form=form)
         else:
             abort(404)
     return render_template('add_news.html',
