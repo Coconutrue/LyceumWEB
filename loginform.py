@@ -203,63 +203,60 @@ def check_r(filename):
 @login_required
 def edit_news(id):
     form = NewsForm()
+    db_sess = db_session.create_session()
+    news = db_sess.query(News).filter(News.id == id).first()
+    if not news:
+        abort(404)
+    if not can_manage_news(news):
+        abort(403)
     if request.method == "GET":
-        db_sess = db_session.create_session()
-        news = db_sess.query(News).filter(News.id == id,
-                                          News.user == current_user
-                                          ).first()
-        if news:
-            form.title.data = news.title
-            form.content.data = news.content
-            form.category.data = news.category
-        else:
-            abort(404)
+        form.title.data = news.title
+        form.content.data = news.content
+        form.category.data = news.category
+
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         news = db_sess.query(News).filter(News.id == id,
                                           News.user == current_user
                                           ).first()
-        if news:
-            news.title = form.title.data
-            news.content = form.content.data
-            news.category = form.category.data
-            saved_filepath = None
-            old_path = None
-            try:
-                if form.image.data and form.image.data.filename:
-                    file = form.image.data
-                    if news.image:
-                        old_path = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], news.image.split('/')[-1])
-                    if file and file.filename:
-                        allowed_ext = {'jpg', 'jpeg', 'png', 'gif'}
-                        ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'jpg'
-                        if ext not in allowed_ext:
-                            return render_template('add_news.html', title='Редактирование новости', form=form)
-                        filename = f"{uuid.uuid4().hex}.{ext}"
-                        filepath = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], filename)
-                        saved_filepath = filepath
-                        file.save(filepath)
-                        if not check_r(filepath):
-                            os.remove(filepath)
-                            form.image.errors.append("Файл слишком большой")
-                            return render_template('add_news.html', title='Редактирование новости', form=form)
-                        if not check_img(filepath):
-                            os.remove(filepath)
-                            form.image.errors.append("Файл повреждён или не является изображением")
-                            return render_template('add_news.html', title='Редактирование новости', form=form)
-                        news.image = f"/static/uploads/news_images/{filename}"
-                db_sess.commit()
-                if saved_filepath and old_path and os.path.exists(old_path):
-                    os.remove(old_path)
-                return redirect('/news')
-            except:
-                db_sess.rollback()
-                if saved_filepath:
-                    os.remove(saved_filepath)
-                form.image.errors.append("Ошибка сервера при сохранении")
-                return render_template('add_news.html', title='Редактирование новости', form=form)
-        else:
-            abort(404)
+        news.title = form.title.data
+        news.content = form.content.data
+        news.category = form.category.data
+        saved_filepath = None
+        old_path = None
+        try:
+            if form.image.data and form.image.data.filename:
+                file = form.image.data
+                if news.image:
+                    old_path = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], news.image.split('/')[-1])
+                if file and file.filename:
+                    allowed_ext = {'jpg', 'jpeg', 'png', 'gif'}
+                    ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else 'jpg'
+                    if ext not in allowed_ext:
+                        return render_template('add_news.html', title='Редактирование новости', form=form)
+                    filename = f"{uuid.uuid4().hex}.{ext}"
+                    filepath = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], filename)
+                    saved_filepath = filepath
+                    file.save(filepath)
+                    if not check_r(filepath):
+                        os.remove(filepath)
+                        form.image.errors.append("Файл слишком большой")
+                        return render_template('add_news.html', title='Редактирование новости', form=form)
+                    if not check_img(filepath):
+                        os.remove(filepath)
+                        form.image.errors.append("Файл повреждён или не является изображением")
+                        return render_template('add_news.html', title='Редактирование новости', form=form)
+                    news.image = f"/static/uploads/news_images/{filename}"
+            db_sess.commit()
+            if saved_filepath and old_path and os.path.exists(old_path):
+                os.remove(old_path)
+            return redirect('/news')
+        except:
+            db_sess.rollback()
+            if saved_filepath:
+                os.remove(saved_filepath)
+            form.image.errors.append("Ошибка сервера при сохранении")
+            return render_template('add_news.html', title='Редактирование новости', form=form)
     return render_template('add_news.html',
                            title='Редактирование новости',
                            form=form
@@ -270,14 +267,17 @@ def edit_news(id):
 @login_required
 def news_delete(id):
     db_sess = db_session.create_session()
-    news = db_sess.query(News).filter(News.id == id, News.user == current_user).first()
-    if news:
-        if news.image:
-            image_path = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], news.image.split('/')[-1])
-            if os.path.exists(image_path):
-                os.remove(image_path)
-        db_sess.delete(news)
-        db_sess.commit()
+    news = db_sess.query(News).filter(News.id == id).first()
+    if not news:
+        abort(404)
+    if not can_manage_news(news):
+        abort(403)
+    if news.image:
+        image_path = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], news.image.split('/')[-1])
+        if os.path.exists(image_path):
+            os.remove(image_path)
+    db_sess.delete(news)
+    db_sess.commit()
     return redirect('/news')
 
 
@@ -332,6 +332,31 @@ def login():
 
     return render_template('login.html', title='Authorization', form=form)
 
+"""ажминка"""
+@app.context_processor
+def utility_processor():
+    def is_admin():
+        return current_user.is_authenticated and current_user.is_admin
+    return dict(is_admin=is_admin)
+
+
+def admin_required(func): #декоратор для ограничения доступа
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated:
+            return redirect('/login')
+        if not current_user.is_admin:
+            abort(403)
+        return func(*args, **kwargs)
+    return wrapper
+
+def can_manage_news(news):
+    if not current_user.is_authenticated:
+        return False
+    if news.user == current_user:
+        return True
+    if current_user.is_admin:
+        return True
+    return False
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")

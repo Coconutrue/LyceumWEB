@@ -19,6 +19,7 @@ class User(SqlAlchemyBase, UserMixin):
                                      default=datetime.datetime.now)
     avatar = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     news = orm.relationship("News", back_populates='user')
+    is_admin = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)

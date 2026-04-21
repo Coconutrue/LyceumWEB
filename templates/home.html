@@ -24,6 +24,9 @@
                     <div class="otstup_">
                         <h3 class="mb-1 animate__animated animate__backInLeft logo-text">Clan Wars</h3>
                     </div>
+                    {% if is_admin() %}
+                    <h1>Пошел нахуй. Лошок</h1>
+                    {% endif %}
                     <div class="nav-buttons-wrapper">
                         <div class="otstup mt-3">
                             <p class="mb-0">{{ form.donation(type="submit", class="btn btn-outline-warning btn-wide nav-btn") }}</p>
