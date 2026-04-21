@@ -1,10 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style_locations.css">
+    <title>Мобы и боссы</title>
 </head>
 <body>
-Monsters
+<header>
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <h3 class="animate__animated animate__backInLeft logo-text mb-0">Clan Wars</h3>
+            </div>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-warning btn-wide">
+                    <i class="fas fa-home me-2"></i>Main page
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="text-center hero-section">
+    <h3 class="mb-1 page-title animate__animated animate__fadeInDown">
+        <i class="fas fa-dragon me-2"></i>Мобы и боссы
+    </h3>
+    <hr class="custom-hr mx-auto">
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="main-card animate__animated animate__zoomIn">
+                <div class="main-card-body">
+                    <div class="content-text">
+                        <h4 class="first-paragraph">
+                            <i class="fas fa-globe me-2 gold-icon"></i>
+                            Исследуя локации сервера, на вашем пути будут встречаться различные враги и прочие существа.
+                            Начиная с обычных животных, и хищников, которые либо в страхе убегают от опасности, либо
+                            защищают своё место обитания и заканчивая более опасными существами...
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container text-center mt-5">
+    <div class="row justify-content-center align-items-stretch g-4">
+        <div class="col-md-6 d-flex">
+            <div class="description-box">
+                <h5><i class="fas fa-scroll me-2"></i>Заметки</h5>
+                <h6 class="description-text">
+                    Пожалуй, чаще всего преградой на вашем пути будут
+                    кланы разбойников, которые потихоньку становятся всё
+                    больше и больше.
+                    Несмотря на то, как их называют, в их отрядах есть диссциплина,
+                    а в бою они очень хорошо себя показывают.
+                    Их группированные атаки представляют серьёзную опастность.
+                    Даже такие величественные строения как "Форт Аротел" и "Приморская
+                    крепость" стали жертвой такого нападения...
+                </h6>
+            </div>
+        </div>
+       <div class="col-md-6 d-flex">
+            <div id="carouselExampleFade1" class="carousel slide carousel-fade custom-carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/static/img/монстры/разбойники1.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/img/монстры/разбойники2.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/img/монстры/разбойники3.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/img/монстры/разбойники4.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/img/монстры/разбойники5.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/img/монстры/разбойники6.png" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade1" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade1" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center mt-5">
+    <div class="row justify-content-center align-items-stretch g-4">
+        <div class="col-md-6 d-flex">
+            <div id="carouselExampleFade2" class="carousel slide carousel-fade custom-carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/static/img/монстры/2026-03-14_12.27.29.png" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade2" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade2" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex">
+            <div class="description-box w-100">
+                <h5><i class="fas fa-scroll me-2"></i>Заметки</h5>
+                <h6 class="description-text">
+                    Помимо врагов, в мире можно найти и друзей. Или по крайней
+                    мере тех, кто не собирается вас покалечить. В деревнях можно
+                    найти различных торговцев и крестьян всеразличных профессий.
+                    А улицы больших городов уже патрулируют стражники и офицеры.
+                    Рядом с столицами может быть большой военный лагерь, куда
+                    с плохими намерениями лучше не соваться. Но коли душа чиста,
+                    проход свободен.
+                </h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center mt-5">
+    <div class="row justify-content-center align-items-stretch g-4">
+        <div class="col-md-6 d-flex">
+            <div class="description-box">
+                <h5><i class="fas fa-scroll me-2"></i>Заметки</h5>
+                <h6 class="description-text">
+                    Но все предыдущие враги меркнут, по сравнению с теми, кто скрывается
+                    в самых сердцах разрушенных или вражеских баз. Те, кто гораздо
+                    мощнее любого стражника на улицах. Мало кто переживал встречи с ними,
+                    но слухи об некоторых из них ползут по улицам даже самых мелких
+                    деревень...
+
+                    От огромных стражей былых цивилизаций, до громадных крылатых созданий,
+                    что и по сей день внушают ужас в сердца обитателей этого мира...
+                </h6>
+            </div>
+        </div>
+       <div class="col-md-6 d-flex">
+            <div id="carouselExampleFade" class="carousel slide carousel-fade custom-carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/static/img/монстры/босс1.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/img/монстры/босс2.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/img/монстры/босс3.png" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-users"></i>
+                    <h5>Активное комьюнити</h5>
+                    <p>Присоединяйся к клановым войнам и найди верных союзников</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-gem me-2"></i>
+                    <h5>Уникальная лут</h5>
+                    <p>Ресурсы, таланты и уникальные предметы</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h5>21+ локация</h5>
+                    <p>Захватывающие виды</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h5>Античит защита</h5>
+                    <p>Честная игра для всех игроков</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mb-5">
+    <a href="{{ url_for('home') }}" class="btn-back-home">
+        <i class="fas fa-arrow-left me-2"></i>Вернуться на главную
+    </a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

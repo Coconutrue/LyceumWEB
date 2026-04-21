@@ -123,6 +123,8 @@ def logout():
 
 
 """news"""
+#мб имеет смысл сделать какауюто общую функцию которая будет провоодить все проверки с изображением?
+#есть ли смысл везде закидывать url_for или можно оставить render_template?
 @app.route("/news")
 def news():
     db_sess = db_session.create_session()
@@ -188,13 +190,12 @@ def check_img(filename):
         return False
 
 def check_r(filename):
-    try:
-        image = Image.open(f"{filename}")
-        width, height = image.size
-        if width > 4000 or height > 4000:
-            return False
-    except:
-        return True
+    image = Image.open(f"{filename}")
+    width, height = image.size
+    if width > 4000 or height > 4000:
+        return False
+    return True
+
 
 
 
@@ -281,8 +282,6 @@ def news_delete(id):
 
 
 """логин регистрация, вся фигня"""
-
-
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()

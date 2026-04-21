@@ -26,8 +26,32 @@
     </nav>
 </header>
 
-<div class="page-title">
-    <h2><i class="fas fa-map-marked-alt me-3"></i> Локации</h2>
+<div class="text-center hero-section">
+    <h3 class="mb-1 page-title animate__animated animate__fadeInDown">
+        <i class="fas fa-scroll me-2"></i>Локации
+    </h3>
+    <hr class="custom-hr mx-auto">
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="main-card animate__animated animate__zoomIn">
+                <div class="main-card-body">
+                    <div class="content-text">
+                        <h4 class="first-paragraph">
+                            <i class="fas fa-globe me-2 gold-icon"></i>
+                            Наша карта, наполнена различными точками интереса. Это может быть и большой город,
+                            где вы можете найти торговцев, квесты, целые сюжетные линии! Деревни поменьше, где
+                            можно пополнить припасы и выполнить пару квестов, помогая жителям. Так и руины прошлого
+                            мира. Разрушенные поселения, подземелья, и даже руины величественных замков.
+                            Исследуйте, раскрывайте лор и находите новое снаряжение.
+                            На скринах ниже вы можете увидеть несколько таких, а также узнать процесс их постройки.
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container text-center mt-5">
@@ -231,7 +255,11 @@
         </div>
     </div>
 </div>
-
+<div class="text-center mb-5">
+    <a href="{{ url_for('home') }}" class="btn-back-home">
+        <i class="fas fa-arrow-left me-2"></i>Вернуться на главную
+    </a>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

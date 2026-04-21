@@ -314,3 +314,87 @@ body {
     font-size: 0.85rem;
     margin: 0;
 }
+
+
+
+.main-card {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 193, 7, 0.35);
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+}
+
+.main-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 193, 7, 0.6);
+    box-shadow: 0 30px 50px -15px rgba(0, 0, 0, 0.6);
+}
+
+.main-card-body {
+    padding: 2.5rem;
+}
+
+.content-text h4 {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    font-weight: 500;
+}
+
+.first-paragraph {
+    margin-bottom: 2rem;
+}
+.hero-section {
+    margin-top: 60px;
+    margin-bottom: 40px;
+    padding: 0 1rem;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffc107, #ff8c00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+    margin-bottom: 0;
+}
+
+.custom-hr {
+    width: 200px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #ffc107, #ff8c00, #ffc107, transparent);
+    border: none;
+    border-radius: 4px;
+    margin: 0.8rem auto;
+    opacity: 0.9;
+}
+
+.gold-icon {
+    color: #ffc107;
+    margin-right: 10px;
+}
+.btn-back-home {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 193, 7, 0.4);
+    border-radius: 40px;
+    padding: 0.7rem 2rem;
+    color: #ffc107;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-back-home:hover {
+    background: #ffc107;
+    color: #1a1a2e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 193, 7, 0.3);
+}
