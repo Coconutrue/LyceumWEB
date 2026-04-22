@@ -1,5 +1,5 @@
 from data import db_session
-from classes import LoginForm, NewsForm, homeForm, ProfileForm, Admin
+from classes import LoginForm, NewsForm, homeForm, ProfileForm
 from data.users import User
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 from data.News import News
@@ -87,6 +87,10 @@ def profile():
                                            form=form,
                                            message="Это имя пользователя уже занято")
                 user.name = form.username.data
+            if len(form.username.data) < 4 or len(form.username.data) > 14:
+                return render_template('profile.html', title='Авторизация',
+                                       form=form,
+                                       message="Ошибка. Длина имени должна составлять от 3 до 14 символов")
 
             if form.email.data != user.email:
                 existing_user = db_sess.query(User).filter(User.email == form.email.data).first()
@@ -95,7 +99,10 @@ def profile():
                                            form=form,
                                            message="Этот email уже используется")
                 user.email = form.email.data
-
+            if not "@" in form.email.data:
+                return render_template('profile.html', title='Авторизация',
+                                       form=form,
+                                       message="Ошибка. Укажите корректную почту")
             if form.new_password.data:
                 if not user.check_password(form.old_password.data):
                     return render_template('profile.html',
@@ -105,6 +112,10 @@ def profile():
                     return render_template('profile.html',
                                            form=form,
                                            message="Новые пароли не совпадают")
+                if len(form.new_password.data) < 4 or len(form.new_password.data) > 14:
+                    return render_template('profile.html', title='Авторизация',
+                                           form=form,
+                                           message="Ошибка. Длина пароля должна составлять от 3 до 14 символов")
                 user.set_password(form.new_password.data)
             db_sess.commit()
             return render_template('profile.html',

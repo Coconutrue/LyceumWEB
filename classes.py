@@ -23,7 +23,6 @@ class homeForm(FlaskForm):
     rules = SubmitField('Правила')
     donation = SubmitField('На сухарики')
     log_in = SubmitField('Вход')
-    admin = SubmitField("Админка")
 
 class NewsForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
