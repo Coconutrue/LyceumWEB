@@ -37,6 +37,11 @@
                         <div class="otstup mt-3">
                             <p class="mb-0">{{ form.rules(type="submit", class="btn btn-outline-warning btn-wide nav-btn") }}</p>
                         </div>
+                        {% if current_user.is_admin %}
+                        <div class="otstup mt-3">
+                            <p class="mb-0">{{ form.admin(type="submit", class="btn btn-outline-warning btn-wide nav-btn") }}</p>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
 

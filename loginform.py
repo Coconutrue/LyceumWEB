@@ -1,5 +1,5 @@
 from data import db_session
-from classes import LoginForm, NewsForm, homeForm, ProfileForm
+from classes import LoginForm, NewsForm, homeForm, ProfileForm, Admin
 from data.users import User
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 from data.News import News
@@ -36,8 +36,9 @@ def home():
             return redirect(url_for('profile'))
         elif form.log_in.data:
             return redirect(url_for('login'))
+        elif form.admin.data:
+            return redirect(url_for('admin'))
     return render_template('home.html', title='Home', form=form)
-
 
 @app.route('/about_project', methods=['GET', 'POST'])
 def about_project():
@@ -124,7 +125,6 @@ def logout():
 
 """news"""
 #мб имеет смысл сделать какую-то общую функцию которая будет проводить все проверки с изображением?
-#есть ли смысл везде закидывать url_for или можно оставить render_template?
 @app.route("/news")
 def news():
     db_sess = db_session.create_session()
@@ -296,7 +296,7 @@ def login():
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Пароли не совпадают")
-        if form.password_reg.data > 14 or form.password_reg.data < 3:
+        if len(form.password_reg.data) > 14 or len(form.password_reg.data) < 3:
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Ошибка. Длина имени должна составлять от 3 до 14 символов")
@@ -304,7 +304,7 @@ def login():
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Все регистрационные поля должны быть заполнены")
-        if form.username_reg.data > 14 or form.username_reg.data < 3:
+        if len(form.username_reg.data) > 14 or len(form.username_reg.data) < 3:
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Ошибка. Длина имени должна составлять от 3 до 14 символов")
@@ -350,16 +350,6 @@ def utility_processor():
         return current_user.is_authenticated and current_user.is_admin
     return dict(is_admin=is_admin)
 
-
-def admin_required(func): #декоратор для ограничения доступа
-    def wrapper(*args, **kwargs):
-        if not current_user.is_authenticated:
-            return redirect('/login')
-        if not current_user.is_admin:
-            abort(403)
-        return func(*args, **kwargs)
-    return wrapper
-
 def can_manage_news(news):
     if not current_user.is_authenticated:
         return False
@@ -368,6 +358,8 @@ def can_manage_news(news):
     if current_user.is_admin:
         return True
     return False
+
+
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
