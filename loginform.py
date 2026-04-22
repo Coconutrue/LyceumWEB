@@ -293,22 +293,34 @@ def login():
     form = LoginForm()
     if form.submit_reg.data:
         if form.password_reg.data != form.confirm_password_reg.data:
-            return render_template('login.html', title='Authorization',
+            return render_template('login.html', title='Авторизация',
                                    form=form,
-                                   message="Passwords don't match")
+                                   message="Пароли не совпадают")
+        if form.password_reg.data > 14 or form.password_reg.data < 3:
+            return render_template('login.html', title='Авторизация',
+                                   form=form,
+                                   message="Ошибка. Длина имени должна составлять от 3 до 14 символов")
         if not form.username_reg.data or not form.email_reg.data or not form.password_reg.data:
-            return render_template('login.html', title='Authorization',
+            return render_template('login.html', title='Авторизация',
                                    form=form,
-                                   message="All registration fields must be filled in")
+                                   message="Все регистрационные поля должны быть заполнены")
+        if form.username_reg.data > 14 or form.username_reg.data < 3:
+            return render_template('login.html', title='Авторизация',
+                                   form=form,
+                                   message="Ошибка. Длина имени должна составлять от 3 до 14 символов")
         db_sess = db_session.create_session()
         if db_sess.query(User).filter(User.email == form.email_reg.data).first():
-            return render_template('login.html', title='Authorization',
+            return render_template('login.html', title='Авторизация',
                                    form=form,
-                                   message="The user with this email already exists")
+                                   message="Пользователь с этим электронным письмом уже существует")
+        if not "@" in form.email_reg.data:
+            return render_template('login.html', title='Авторизация',
+                                   form=form,
+                                   message="Ошибка. Укажите корректную почту")
         if db_sess.query(User).filter(User.name == form.username_reg.data).first():
-            return render_template('login.html', title='Authorization',
+            return render_template('login.html', title='Авторизация',
                                    form=form,
-                                   message="A user with that name already exists")
+                                   message="Пользователь с таким именем уже существует")
         user = User(
             name=form.username_reg.data,
             email=form.email_reg.data,
@@ -316,9 +328,9 @@ def login():
         user.set_password(form.password_reg.data)
         db_sess.add(user)
         db_sess.commit()
-        return render_template('login.html', title='Authorization',
+        return render_template('login.html', title='Авторизация',
                                form=form,
-                               message="Successful registration, log in")
+                               message="Успешная регистрация")
     elif form.submit_log.data:
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email_log.data).first()
@@ -326,11 +338,10 @@ def login():
             login_user(user)
             return redirect(url_for('home'))
         else:
-            return render_template('login.html', title='Authorization',
+            return render_template('login.html', title='Авторизация',
                                    form=form,
-                                   message="Invalid email or password")
-
-    return render_template('login.html', title='Authorization', form=form)
+                                   message="Неверный адрес электронной почты или пароль")
+    return render_template('login.html', title='Авторизация', form=form)
 
 """ажминка"""
 @app.context_processor
