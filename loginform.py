@@ -50,11 +50,13 @@ def interior_payments():
 
 @app.route('/map', methods=['GET', 'POST'])
 def map():
-    x = request.args.get('x', type=int)
-    z = request.args.get('z', type=int)
-    y = request.args.get('y', type=int, default=64)
-    print(x, y, z)
-    return render_template('map.html', x=x, z=z, y=y)
+    # try:
+    x = request.args.get('x')
+    y = request.args.get('y', default=64)
+    z = request.args.get('z')
+    return render_template('map.html', x=x, y=y, z=z)
+    # except:
+    #     return render_template('map.html')
 
 
 @app.route('/rules', methods=['GET', 'POST'])

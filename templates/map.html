@@ -36,10 +36,10 @@
 
 <div class="map-container">
     <iframe
-        src="{% if x and z %}
-                http://217.106.107.168:38815/#world:{ x }:64:{ z }:{ y }0:0:0:0:perspective
+        src="{% if x is not none and z is not none %}
+                http://217.106.107.168:38815/#world:{{ x }}:64:{{ z }}:120:0:0:0:0:perspective
             {% else %}
-                http://217.106.107.168:38815/#world:-526:64:266:100:0:0:0:0:perspective
+                http://217.106.107.168:38815/#world:0:64:0:600:0:0:0:0:perspective
             {% endif %}"
         title="BlueMap">
     </iframe>
