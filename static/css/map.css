@@ -1,12 +1,53 @@
-<style>
-    iframe {
-        display: block;
-        width: 100%;
-        height: 600px;
-        border: none;
-        pointer-events: auto;
-        transform: translateZ(0);
-        backface-visibility: hidden;
-        perspective: 1000px;
-    }
-</style>
+body {
+    background-image: url('/static/img/фон.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.navbar {
+    background: rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 193, 7, 0.35);
+    padding: 0.75rem 2rem;
+}
+.logo-text {
+    font-weight: 800;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, #ffc107, #ffb347, #ffdd88);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.btn-outline-warning {
+    border: 2px solid #ffc107;
+    background: transparent;
+    border-radius: 40px;
+    padding: 0.45rem 1.3rem;
+    color: #ffc107;
+    text-decoration: none;
+}
+.btn-outline-warning:hover {
+    background: #ffc107;
+    color: #1a1a2e;
+}
+.map-container {
+    margin: 20px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+iframe {
+    display: block;
+    width: 100%;
+    height: 70vh;
+    border: none;
+}
+.coords-info {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    border-radius: 40px;
+    padding: 10px 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+}

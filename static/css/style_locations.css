@@ -398,3 +398,77 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(255, 193, 7, 0.3);
 }
+
+.interior-card {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 193, 7, 0.35);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            height: 100%;
+        }
+
+.interior-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 193, 7, 0.6);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+}
+
+.interior-img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.interior-card:hover .interior-img {
+    transform: scale(1.05);
+}
+
+.badge-interior {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #ffc107, #ff8c00);
+    color: #1a1a2e;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    z-index: 10;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.08);
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}

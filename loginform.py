@@ -36,8 +36,6 @@ def home():
             return redirect(url_for('profile'))
         elif form.log_in.data:
             return redirect(url_for('login'))
-        elif form.admin.data:
-            return redirect(url_for('admin'))
     return render_template('home.html', title='Home', form=form)
 
 @app.route('/about_project', methods=['GET', 'POST'])
@@ -52,7 +50,11 @@ def interior_payments():
 
 @app.route('/map', methods=['GET', 'POST'])
 def map():
-    return render_template('map.html')
+    x = request.args.get('x', type=int)
+    z = request.args.get('z', type=int)
+    y = request.args.get('y', type=int, default=64)
+    print(x, y, z)
+    return render_template('map.html', x=x, z=z, y=y)
 
 
 @app.route('/rules', methods=['GET', 'POST'])

@@ -1,10 +1,253 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style_locations.css">
+    <title>Интерьеры и пейзажи</title>
 </head>
 <body>
-interior_payments
+
+<header>
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <h3 class="animate__animated animate__backInLeft logo-text mb-0">Clan Wars</h3>
+            </div>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-warning btn-wide">
+                    <i class="fas fa-home me-2"></i>На главную
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="text-center hero-section">
+    <h3 class="mb-1 page-title animate__animated animate__fadeInDown">
+        <i class="fas fa-palette me-2"></i>Интерьеры и пейзажи
+    </h3>
+    <hr class="custom-hr mx-auto">
+</div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="main-card animate__animated animate__zoomIn">
+                <div class="main-card-body">
+                    <div class="content-text">
+                        <h4 class="first-paragraph">
+                            <i class="fas fa-tree me-2 gold-icon"></i>
+                            Помимо различных точек интереса, наш сервер так-же обладает
+                            природной частью, которая соединяет все постройки вместе.
+                            От равнин с величественными дубами, до массивных гор с
+                            высокими елями.
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="interior-card">
+                <div style="position: relative;">
+                    <img src="/static/img/пейзажи%20и%20тд/интерьер3.png"
+                         class="interior-img"
+                         alt="Тронный зал">
+                    <span class="badge-interior"><i class="fas fa-crown me-1"></i>Тронный зал</span>
+                </div>
+                <div class="p-4">
+                    <h5 style="color: #ffc107;">Цитадель Тордфорда</h5>
+                    <p class="description-text">Величественный тронный зал с высокими сводами, витражами и прекрасными узорами.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ url_for('map', x=-526, z=266, y=64) }}" class="btn-detail">
+                            <i class="fas fa-search-plus me-1"></i>На карту
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="interior-card">
+                <div style="position: relative;">
+                    <img src="/static/img/пейзажи%20и%20тд/интерьер9.png"
+                         class="interior-img"
+                         alt="Библиотека">
+                    <span class="badge-interior"><i class="fas fa-book me-1"></i>Библиотека</span>
+                </div>
+                <div class="p-4">
+                    <h5 style="color: #ffc107;">Заброшенные архивы</h5>
+                    <p class="description-text">Огромная библиотека с тысячами книг. Некогда очень оживленное место...</p>
+<!--                    <div class="d-flex justify-content-between align-items-center">-->
+<!--                        <a href="{{ url_for('map', x=10000, z=10000, y=64) }}" class="btn-detail">-->
+<!--                             <i class="fas fa-search-plus me-1"></i>На карту-->
+<!--                        </a>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="interior-card">
+                <div style="position: relative;">
+                    <img src="/static/img/интерьеры/таверна.png"
+                         class="interior-img"
+                         alt="Таверна">
+                    <span class="badge-interior"><i class="fas fa-mug-hot me-1"></i>Таверна</span>
+                </div>
+                <div class="p-4">
+                    <h5 style="color: #ffc107;">"Пьяный дракон"</h5>
+                    <p class="description-text">Уютная таверна с камином, барной стойкой и живой музыкой. Любимое место отдыха искателей приключений.</p>
+<!--                    <div class="d-flex justify-content-between align-items-center">-->
+<!--                        <a href="{{ url_for('map', x=10000, z=10000, y=64) }}" class="btn-detail">-->
+<!--                             <i class="fas fa-search-plus me-1"></i>На карту-->
+<!--                        </a>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="section-header text-center mb-4">
+        <h3 style="color: #ffc107"><i class="fas fa-mountain-sun me-2"></i>Захватывающие пейзажи</h3>
+        <div class="section-line mx-auto"></div>
+    </div>
+    <div id="landscapeCarousel" class="carousel slide carousel-fade custom-carousel mb-5" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#landscapeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#landscapeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#landscapeCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#landscapeCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/static/img/пейзажи%20и%20тд/пейзаж1.png" class="d-block w-100" alt="Деревня на севере">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Деревня на севере</h5>
+                    <p>Вид на север с высоты птичьего полёта</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/пейзажи%20и%20тд/пейзаж5.png" class="d-block w-100" alt="Водопад">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Спокойная река</h5>
+                    <p>Ручей, неспешно текущий, посреди густых тропиков.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/пейзажи%20и%20тд/пейзаж7.png" class="d-block w-100" alt="Ночной город">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Столица ночью</h5>
+                    <p>Тысячи огней и загадочных теней</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/static/img/пейзажи%20и%20тд/пейзаж3.png" class="d-block w-100" alt="Осенний лес" >
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Разрушенная церковь</h5>
+                    <p>Некогда оживленное место...</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#landscapeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#landscapeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row g-3">
+        <div class="col-md-3 col-sm-6">
+            <div class="gallery-item">
+                <img src="/static/img/пейзажи%20и%20тд/интерьер.png" alt="Баня" >
+<!--                <div class="gallery-overlay">-->
+<!--                        <a href="{{ url_for('map', x=10000, z=10000, y=64) }}" class="btn-detail">-->
+<!--                            <i class="fas fa-search-plus me-1"></i>На карту-->
+<!--                        </a>-->
+<!--                    </div>-->
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="gallery-item">
+                <img src="/static/img/галерея/сад.png" alt="Висячие сады">
+<!--                <div class="gallery-overlay">-->
+<!--                        <a href="{{ url_for('map', x=10000, z=10000, y=64) }}" class="btn-detail">-->
+<!--                            <i class="fas fa-search-plus me-1"></i>На карту-->
+<!--                        </a>-->
+<!--                    </div>-->
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="gallery-item">
+                <img src="/static/img/пейзажи%20и%20тд/интерьер7.png" alt="Подземелье">
+<!--                <div class="gallery-overlay">-->
+<!--                        <a href="{{ url_for('map', x=10000, z=10000, y=64) }}" class="btn-detail">-->
+<!--                            <i class="fas fa-search-plus me-1"></i>На карту-->
+<!--                        </a>-->
+<!--                    </div>-->
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="gallery-item">
+                <img src="/static/img/пейзажи%20и%20тд/пейзаж8.png" alt="Каменный мост">
+<!--                <div class="gallery-overlay">-->
+<!--                        <a href="{{ url_for('map', x=10000, z=10000, y=64) }}" class="btn-detail">-->
+<!--                            <i class="fas fa-search-plus me-1"></i>На карту-->
+<!--                        </a>-->
+<!--                    </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-vr-cardboard"></i>
+                    <h5>Полное погружение</h5>
+                    <p>Атмосферные звуки и кастомные эффекты</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-palette"></i>
+                    <h5>Уникальный дизайн</h5>
+                    <p>Авторские текстуры и цветовые решения</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h5>21+ локация</h5>
+                    <p>Захватывающие виды</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h5>Античит защита</h5>
+                    <p>Честная игра для всех игроков</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mb-5">
+    <a href="{{ url_for('home') }}" class="btn-back-home">
+        <i class="fas fa-arrow-left me-2"></i>Вернуться на главную
+    </a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
