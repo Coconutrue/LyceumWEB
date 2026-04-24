@@ -34,32 +34,6 @@
     <hr class="custom-hr mx-auto">
 </div>
 
-<div class="container mt-4">
-    <div class="locations-quick-nav">
-        <h5 class="nav-title"><i class="fas fa-compass me-2"></i>Быстрый переход к локациям</h5>
-        <div class="locations-buttons">
-            <a href="{{ url_for('map', x=-526, z=266) }}" class="location-link">
-                <i class="fas fa-crown"></i> ...
-            </a>
-            <a href="{{ url_for('map', x=-290, z=-406, y=100) }}" class="location-link">
-                <i class="fas fa-mountain"></i> ...
-            </a>
-            <a href="{{ url_for('map', x=-500, z=-200) }}" class="location-link">
-                <i class="fas fa-fort"></i> ...
-            </a>
-            <a href="{{ url_for('map', x=200, z=300) }}" class="location-link">
-                <i class="fas fa-city"></i> ...
-            </a>
-            <a href="{{ url_for('map', x=-800, z=100) }}" class="location-link">
-                <i class="fas fa-tree"></i> ...
-            </a>
-            <a href="{{ url_for('map', x=0, z=0) }}" class="location-link">
-                <i class="fas fa-map-pin"></i> ...
-            </a>
-        </div>
-    </div>
-</div>
-
 <div class="map-container animate__animated animate__zoomIn">
     <div class="map-header">
         <span class="map-badge"><i class="fas fa-location-dot text-warning me-2"></i>Интерактивная 3D карта</span>

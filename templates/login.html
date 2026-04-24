@@ -41,26 +41,26 @@
             <div class="col-md-auto">
                 <div class="card border-secondary mb-4" style="width: 28rem;">
                     <div class="card-body">
-                        <h5>Already have an account?</h5>
-                        <h1 style="color: #f9c751">Log In Here</h1>
+                        <h5>Уже есть аккаунт?</h5>
+                        <h1 style="color: #f9c751">Входи</h1>
                     </div>
                     <ul class="list-group list-group-flush bg-transparent">
                         <li class="list-group-item">
-                            {{ form.username_log(class="form-control custom-border mb-3", placeholder="Username") }}
+                            {{ form.username_log(class="form-control custom-border mb-3", placeholder="Имя пользователя") }}
                             {% for error in form.username_log.errors %}
                                 <div class="alert alert-danger" role="alert">
                                     {{ error }}
                                 </div>
                             {% endfor %}
 
-                            {{ form.email_log(class="form-control custom-border mb-3", placeholder="email") }}
+                            {{ form.email_log(class="form-control custom-border mb-3", placeholder="почта") }}
                             {% for error in form.email_log.errors %}
                                 <div class="alert alert-danger" role="alert">
                                     {{ error }}
                                 </div>
                             {% endfor %}
 
-                            {{ form.password_log(class="form-control custom-border mb-3", type="password", placeholder="Password") }}
+                            {{ form.password_log(class="form-control custom-border mb-3", type="password", placeholder="Пароль") }}
                             {% for error in form.password_log.errors %}
                                 <div class="alert alert-danger" role="alert">
                                     {{ error }}
@@ -84,32 +84,32 @@
             <div class="col-md-auto">
                 <div class="card border-secondary mb-4" style="width: 28rem;">
                     <div class="card-body">
-                        <h5>Don't have an account?</h5>
-                        <h1 style="color: #f9c751">Register Now</h1>
+                        <h5>Нету аккаунта?</h5>
+                        <h1 style="color: #f9c751">Зарегистрируйся</h1>
                     </div>
                     <ul class="list-group list-group-flush bg-transparent">
                         <li class="list-group-item">
-                            {{ form.username_reg(class="form-control custom-border mb-3", placeholder="Username", required=False) }}
+                            {{ form.username_reg(class="form-control custom-border mb-3", placeholder="Имя пользователя", required=False) }}
                             {% for error in form.username_reg.errors %}
                                 <div class="alert alert-danger" role="alert">
                                     {{ error }}
                                 </div>
                             {% endfor %}
 
-                            {{ form.email_reg(class="form-control custom-border mb-3", placeholder="email", required=False) }}
+                            {{ form.email_reg(class="form-control custom-border mb-3", placeholder="Почта", required=False) }}
                             {% for error in form.email_reg.errors %}
                                 <div class="alert alert-danger" role="alert">
                                     {{ error }}
                                 </div>
                             {% endfor %}
 
-                            {{ form.password_reg(class="form-control custom-border mb-3", type="password", placeholder="Password", required=False) }}
+                            {{ form.password_reg(class="form-control custom-border mb-3", type="password", placeholder="Пароль", required=False) }}
                             {% for error in form.password_reg.errors %}
                                 <div class="alert alert-danger" role="alert">
                                     {{ error }}
                                 </div>
                             {% endfor %}
-                            {{ form.confirm_password_reg(class="form-control custom-border mb-3", type="password", placeholder="Confirm_Password", required=False) }}
+                            {{ form.confirm_password_reg(class="form-control custom-border mb-3", type="password", placeholder="Подтвердите пароль", required=False) }}
                             {% for error in form.confirm_password_reg.errors %}
                                 <div class="alert alert-danger" role="alert">
                                     {{ error }}
