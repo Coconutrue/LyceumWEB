@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/css/map.css">
-    <title>Карта мира</title>
+    <title>Clan Wars</title>
 </head>
 <body>
 
@@ -14,10 +16,10 @@
     <nav class="navbar navbar-dark">
         <div class="container-fluid">
             <div class="d-flex align-items-center">
-                <h3 class="logo-text mb-0">Clan Wars</h3>
+                <h3 class="animate__animated animate__backInLeft logo-text mb-0">Clan Wars</h3>
             </div>
             <div class="d-flex gap-3 align-items-center">
-                <a href="{{ url_for('home') }}" class="btn btn-outline-warning">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-warning btn-wide">
                     <i class="fas fa-home me-2"></i>На главную
                 </a>
             </div>
@@ -25,17 +27,45 @@
     </nav>
 </header>
 
-<div class="container text-center mt-4">
-    <div class="coords-info">
-        <i class="fas fa-location-dot text-warning me-2"></i>
-        <span class="text-white">
-            Карта
-        </span>
+<div class="text-center hero-section">
+    <h3 class="mb-1 page-title animate__animated animate__fadeInDown">
+        <i class="fas fa-map-marked-alt me-2"></i>Карта мира
+    </h3>
+    <hr class="custom-hr mx-auto">
+</div>
+
+<div class="container mt-4">
+    <div class="locations-quick-nav">
+        <h5 class="nav-title"><i class="fas fa-compass me-2"></i>Быстрый переход к локациям</h5>
+        <div class="locations-buttons">
+            <a href="{{ url_for('map', x=-526, z=266) }}" class="location-link">
+                <i class="fas fa-crown"></i> ...
+            </a>
+            <a href="{{ url_for('map', x=-290, z=-406, y=100) }}" class="location-link">
+                <i class="fas fa-mountain"></i> ...
+            </a>
+            <a href="{{ url_for('map', x=-500, z=-200) }}" class="location-link">
+                <i class="fas fa-fort"></i> ...
+            </a>
+            <a href="{{ url_for('map', x=200, z=300) }}" class="location-link">
+                <i class="fas fa-city"></i> ...
+            </a>
+            <a href="{{ url_for('map', x=-800, z=100) }}" class="location-link">
+                <i class="fas fa-tree"></i> ...
+            </a>
+            <a href="{{ url_for('map', x=0, z=0) }}" class="location-link">
+                <i class="fas fa-map-pin"></i> ...
+            </a>
+        </div>
     </div>
 </div>
 
-<div class="map-container">
+<div class="map-container animate__animated animate__zoomIn">
+    <div class="map-header">
+        <span class="map-badge"><i class="fas fa-location-dot text-warning me-2"></i>Интерактивная 3D карта</span>
+    </div>
     <iframe
+        id="bluemap-frame"
         src="{% if x is not none and z is not none %}
                 http://217.106.107.168:38815/#world:{{ x }}:64:{{ z }}:120:0:0:0:0:perspective
             {% else %}
@@ -43,6 +73,37 @@
             {% endif %}"
         title="BlueMap">
     </iframe>
+</div>
+
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-cube"></i>
+                    <h5>3D-обзор</h5>
+                    <p>Полностью интерактивная карта с возможностью вращения и масштабирования</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-eye"></i>
+                    <h5>Перспектива от первого лица</h5>
+                    <p>Осмотрите мир глазами вашего персонажа</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-sync-alt"></i>
+                    <h5>Актуальные данные</h5>
+                    <p>Карта синхронизируется с сервером в реальном времени</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="text-center mb-5">
+    <a href="{{ url_for('home') }}" class="btn-back-home">
+        <i class="fas fa-arrow-left me-2"></i>Вернуться на главную
+    </a>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
