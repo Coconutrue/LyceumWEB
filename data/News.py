@@ -1,10 +1,12 @@
+from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from sqlalchemy_serializer import SerializerMixin
 from data.db_session import SqlAlchemyBase
 
 
-class News(SqlAlchemyBase):
+class News(SqlAlchemyBase, SerializerMixin, UserMixin):
     __tablename__ = 'news'
 
     id = Column(Integer, primary_key=True, autoincrement=True)

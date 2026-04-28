@@ -6,7 +6,9 @@ from data.News import News
 from PIL import Image
 import os
 import uuid
-from flask import Flask, request, render_template, redirect, abort, url_for
+from flask import Flask, request, render_template, redirect, url_for
+from flask_restful import reqparse, abort, Api, Resource
+from data import db_session, news_api
 
 
 app = Flask(__name__)
@@ -378,6 +380,7 @@ def can_manage_news(news):
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
+    app.register_blueprint(news_api.blueprint)
     app.run(port=2010, host='127.0.0.1', debug=True)
 
 
