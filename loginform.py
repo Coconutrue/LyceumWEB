@@ -311,7 +311,7 @@ def login():
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Пароли не совпадают")
-        if len(form.password_reg.data) > 14 or len(form.password_reg.data) < 3:
+        if len(form.password_reg.data) >= 14 or len(form.password_reg.data) < 2:
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Ошибка. Длина имени должна составлять от 3 до 14 символов")
@@ -319,16 +319,16 @@ def login():
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Все регистрационные поля должны быть заполнены")
-        if len(form.username_reg.data) > 14 or len(form.username_reg.data) < 3:
+        if len(form.username_reg.data) >= 14 or len(form.username_reg.data) < 3:
             return render_template('login.html', title='Авторизация',
                                    form=form,
-                                   message="Ошибка. Длина имени должна составлять от 3 до 14 символов")
+                                   message="Ошибка. Длина имени должна составлять от 4 до 14 символов")
         db_sess = db_session.create_session()
         if db_sess.query(User).filter(User.email == form.email_reg.data).first():
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Пользователь с этим электронным письмом уже существует")
-        if not "@" in form.email_reg.data:
+        if not "@" in form.email_reg.data or form.email_reg.data[-1] == "@":
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Ошибка. Укажите корректную почту")

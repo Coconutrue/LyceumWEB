@@ -1,15 +1,16 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, RadioField
+from wtforms.fields.simple import EmailField
 from wtforms.validators import DataRequired, Optional
 
 
 class LoginForm(FlaskForm):
     username_log = StringField('Имя пользователя', validators=[DataRequired()])
     password_log = PasswordField('Пароль', validators=[DataRequired()])
-    email_log = StringField('Почта', validators=[DataRequired()])
+    email_log = EmailField('Почта', validators=[DataRequired()])
     username_reg = StringField('Имя пользователя', validators=[Optional()])
-    email_reg = StringField('Почта', validators=[Optional()])
+    email_reg = EmailField('Почта', validators=[Optional()])
     password_reg = PasswordField('Пароль', validators=[Optional()])
     confirm_password_reg = PasswordField('Сохранить изменения', validators=[Optional()])
     submit_reg = SubmitField('Регистрация')
@@ -38,8 +39,7 @@ class NewsForm(FlaskForm):
 
 class ProfileForm(FlaskForm):
     username = StringField('Имя пользователя', validators=[DataRequired()])
-    email = StringField('Почта', validators=[DataRequired()])
-    avatar = FileField('')
+    email = EmailField('Почта', validators=[DataRequired()])
     old_password = PasswordField('Прошлый пароль')
     new_password = PasswordField('Новый пароль')
     confirm_password = PasswordField('Повторите пароль')
