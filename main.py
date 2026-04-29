@@ -1,4 +1,4 @@
-from data import db_session
+from data import db_session, users_api
 from classes import LoginForm, NewsForm, homeForm, ProfileForm
 from data.users import User
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
@@ -381,6 +381,7 @@ def can_manage_news(news):
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
     app.register_blueprint(news_api.blueprint)
+    app.register_blueprint(users_api.blueprint)
     app.run(port=2010, host='127.0.0.1', debug=True)
 
 
