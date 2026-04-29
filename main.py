@@ -1,4 +1,3 @@
-from data import db_session, users_api
 from classes import LoginForm, NewsForm, homeForm, ProfileForm
 from data.users import User
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
@@ -7,9 +6,9 @@ from PIL import Image
 import os
 import uuid
 from flask import Flask, request, render_template, redirect, url_for
-from flask_restful import reqparse, abort, Api, Resource
-from data import db_session, news_api
-
+from flask_restful import abort
+from data import db_session
+from tools import news_api, auth_api
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -44,11 +43,9 @@ def home():
 def about_project():
     return render_template('about_project.html', title='About Project')
 
-
 @app.route('/interior_payments', methods=['GET', 'POST'])
 def interior_payments():
     return render_template('interior_payments.html')
-
 
 @app.route('/map', methods=['GET', 'POST'])
 def map():
@@ -60,21 +57,17 @@ def map():
     # except:
     #     return render_template('map.html')
 
-
 @app.route('/rules', methods=['GET', 'POST'])
 def rules():
     return render_template('rules.html')
-
 
 @app.route('/locations', methods=['GET', 'POST'])
 def locations():
     return render_template('locations.html', title='Locations')
 
-
 @app.route('/What_is_this', methods=['GET', 'POST'])
 def Monsters():
     return render_template('Monsters.html')
-
 
 
 """профиль и его изменение(на подобии новостей)"""
@@ -213,9 +206,6 @@ def check_r(filename):
         return False
     return True
 
-
-
-
 @app.route('/news/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_news(id):
@@ -279,7 +269,6 @@ def edit_news(id):
                            form=form
                            )
 
-
 @app.route('/news_delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def news_delete(id):
@@ -303,7 +292,6 @@ def news_delete(id):
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.get(User, user_id)
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -377,11 +365,10 @@ def can_manage_news(news):
     return False
 
 
-
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
     app.register_blueprint(news_api.blueprint)
-    app.register_blueprint(users_api.blueprint)
+    app.register_blueprint(auth_api.blueprint)
     app.run(port=2010, host='127.0.0.1', debug=True)
 
 

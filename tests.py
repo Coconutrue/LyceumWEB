@@ -16,4 +16,4 @@ from requests import get, post, delete
 #                  'category': 'other'}).json())Ы
 # print(delete('http://127.0.0.1:2010/api/news/999').json())
 # print(delete('http://127.0.0.1:2010/api/news/4').json())
-print(get('http://127.0.0.1:2010/api/users/1').json())
+print(get('http://127.0.0.1:2010/api/user/1').json())
