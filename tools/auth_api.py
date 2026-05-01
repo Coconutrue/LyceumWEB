@@ -40,7 +40,7 @@ def user_register():
             'email': user.email,
             'is_admin': user.is_admin
         }
-    }), 201
+    }), 200
 
 
 @blueprint.route('/api/login', methods=['POST'])
