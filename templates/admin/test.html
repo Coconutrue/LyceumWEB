@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if message %}
+<div class="container mt-3">
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ message }}
+    </div>
+</div>
+{% endif %}
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.get_user(class="form-control custom-border mb-3", placeholder="Имя пользователя") }}
+    <p>{{ form.submit(type="submit", class="btn btn-outline-warning btn-wide") }}</p>
+</form>
+</body>
+</html>

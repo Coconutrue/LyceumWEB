@@ -1,4 +1,4 @@
-from classes import LoginForm, NewsForm, homeForm, ProfileForm
+from classes import LoginForm, NewsForm, homeForm, ProfileForm, Admin
 from data.users import User
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 from data.News import News
@@ -37,6 +37,8 @@ def home():
             return redirect(url_for('profile'))
         elif form.log_in.data:
             return redirect(url_for('login'))
+        elif form.admin.data:
+            return redirect(url_for('admin'))
     return render_template('home.html', title='Home', form=form)
 
 @app.route('/about_project', methods=['GET', 'POST'])
@@ -363,6 +365,27 @@ def can_manage_news(news):
     if current_user.is_admin:
         return True
     return False
+
+
+@app.route('/admin', methods=['GET', 'POST'])
+@login_required
+def admin():
+    form = Admin()
+    db_sess = db_session.create_session()
+
+    # эта конкретная часть кода по идее должна работать как апи, но как мне кажется
+    # это больше использование обычной функции. Короче я пока не считаю что это коректное применение api это
+    # лишь жалкая попытка
+    if form.submit.data:
+        if not db_sess.query(User).filter(User.name == form.get_user.data).first():
+            return render_template('admin/test.html', title='admin', form=form, message="такого пользователя не существует")
+        from tools.auth_api import api_get_user
+        result = api_get_user(form.get_user.data).json
+        return render_template('admin/test.html', title='admin', form=form, message=result)
+    #
+    if current_user.is_admin:
+        return render_template('admin/test.html', title='admin', form=form)
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':

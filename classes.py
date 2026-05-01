@@ -24,6 +24,7 @@ class homeForm(FlaskForm):
     rules = SubmitField('Правила')
     donation = SubmitField('На сухарики')
     log_in = SubmitField('Вход')
+    admin = SubmitField("Админка")
 
 class NewsForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
@@ -45,3 +46,6 @@ class ProfileForm(FlaskForm):
     confirm_password = PasswordField('Повторите пароль')
     submit = SubmitField('Сохранить изменения')
 
+class Admin(FlaskForm):
+    get_user = StringField("Имя пользователя", validators=[DataRequired()])
+    submit = SubmitField('получить данные')
