@@ -1,6 +1,6 @@
 import flask
 from flask import jsonify, make_response, request
-from unicodedata import category
+from flask_login import login_required
 
 from data import db_session
 from data.News import News
@@ -55,6 +55,7 @@ def create_news():
     return jsonify({'id': news.id})
 
 @blueprint.route('/api/news/<int:news_id>', methods=['DELETE'])
+@login_required
 def delete_news(news_id):
     db_sess = db_session.create_session()
     news = db_sess.get(News, news_id)

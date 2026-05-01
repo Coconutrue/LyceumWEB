@@ -4,7 +4,6 @@ from flask import request, jsonify, Blueprint
 from flask_login import login_user, logout_user, login_required, current_user
 from data import db_session
 from data.users import User
-from main import app
 
 blueprint = Blueprint('auth_api', __name__, template_folder='templates')
 
@@ -46,29 +45,29 @@ def user_register():
     }), 201
 
 
-@blueprint.route('/api/login', methods=['POST'])
-def user_login():
-    if not request.json:
-        return jsonify({'error': 'Empty request'}), 400
-    data = request.json
-    email = data.get('email')
-    password = data.get('password')
-    if not email or not password:
-        return jsonify({'error': 'Email and password required'}), 400
-    db_sess = db_session.create_session()
-    user = db_sess.query(User).filter(User.email == email).first()
-    if not user or not user.check_password(password):
-        return jsonify({'error': 'Invalid email or password'}), 401
-    login_user(user)
-    return jsonify({
-        'success': True,
-        'user': {
-            'id': user.id,
-            'name': user.name,
-            'email': user.email,
-            'is_admin': user.is_admin
-        }
-    })
+# @blueprint.route('/api/login', methods=['POST'])
+# def user_login():
+#     if not request.json:
+#         return jsonify({'error': 'Empty request'}), 400
+#     data = request.json
+#     email = data.get('email')
+#     password = data.get('password')
+#     if not email or not password:
+#         return jsonify({'error': 'Email and password required'}), 400
+#     db_sess = db_session.create_session()
+#     user = db_sess.query(User).filter(User.email == email).first()
+#     if not user or not user.check_password(password):
+#         return jsonify({'error': 'Invalid email or password'}), 401
+#     login_user(user)
+#     return jsonify({
+#         'success': True,
+#         'user': {
+#             'id': user.id,
+#             'name': user.name,
+#             'email': user.email,
+#             'is_admin': user.is_admin
+#         }
+#     })
 
 
 @blueprint.route('/api/logout', methods=['POST'])
@@ -79,9 +78,12 @@ def user_logout():
 
 
 @blueprint.route('/api/user/<string:user_name>', methods=['GET'])
+@login_required
 def api_get_user(user_name):
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.name == user_name).first()
+    if not current_user.is_admin:
+        return jsonify({'error': 'Admin access required'}), 403
     if not user:
         return jsonify({'error': 'User not found'}), 404
     return jsonify({
@@ -144,46 +146,42 @@ def api_update_user():
     })
 
 
+@blueprint.route('/api/all_users')
+@login_required
+def get_all_users():
+    if not current_user.is_admin:
+        return jsonify({'error': 'Admin access required'}), 403
+    db_sess = db_session.create_session()
+    news = db_sess.query(User).all()
+    return jsonify(
+        {
+            'users':
+                [item.to_dict(only=('id', 'email', 'name', 'created_date', 'is_admin'))
+                 for item in news]
+        }
+    )
 
-
-
-
-# @blueprint.route('/api/admin/users', methods=['GET'])
-# @login_required
-# def admin_get_users():
-#     if not current_user.is_admin:
-#         return jsonify({'error': 'Admin access required'}), 403
-#     db_sess = db_session.create_session()
-#     users = db_sess.query(User).all()
-#     return jsonify({
-#         'users': [{
-#             'id': u.id,
-#             'name': u.name,
-#             'email': u.email,
-#             'is_admin': u.is_admin,
-#             'created_date': u.created_date.isoformat() if u.created_date else None,
-#             'news_count': len(u.news)
-#         } for u in users]
-#     })
-#
-#
-# @blueprint.route('/api/admin/users/<int:user_id>', methods=['DELETE'])
-# @login_required
-# def admin_delete_user(user_id):
-#     if not current_user.is_admin:
-#         return jsonify({'error': 'Admin access required'}), 403
-#     if user_id == current_user.id:
-#         return jsonify({'error': 'Cannot delete yourself'}), 400
-#     db_sess = db_session.create_session()
-#     user = db_sess.get(User, user_id)
-#     if not user:
-#         return jsonify({'error': 'User not found'}), 404
-#     for news in user.news:
-#         if news.image:
-#             image_path = os.path.join(app.config['NEWS_UPLOAD_FOLDER'], news.image.split('/')[-1])
-#             if os.path.exists(image_path):
-#                 os.remove(image_path)
-#         db_sess.delete(news)
-#     db_sess.delete(user)
-#     db_sess.commit()
-#     return jsonify({'success': True, 'message': f'User {user.name} deleted'})
+@blueprint.route('/api/del_user/<string:user_id>')
+@login_required
+def admin_delete_user(user_id):
+    try:
+        user_id = int(user_id)
+    except ValueError:
+        return jsonify({'error': 'Число вводи'}), 403
+    if not current_user.is_admin:
+        return jsonify({'error': 'Admin access required'}), 403
+    if user_id == current_user.id:
+        return jsonify({'error': 'Cannot delete yourself'}), 400
+    db_sess = db_session.create_session()
+    user = db_sess.get(User, user_id)
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    for news in user.news:
+        if news.image:
+            image_path = os.path.join('static/uploads', news.image.split('/')[-1])
+            if os.path.exists(image_path):
+                os.remove(image_path)
+        db_sess.delete(news)
+    db_sess.delete(user)
+    db_sess.commit()
+    return jsonify({'success': True, 'message': f'User {user.name} deleted'})

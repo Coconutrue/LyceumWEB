@@ -16,10 +16,8 @@ app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-app.config['UPLOAD_FOLDER'] = 'static/uploads/avatars'
-app.config['NEWS_UPLOAD_FOLDER'] = 'static/uploads/news_images'
+app.config['NEWS_UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['NEWS_UPLOAD_FOLDER'], exist_ok=True)
 
 
@@ -183,7 +181,7 @@ def add_news():
                         form.image.errors.append("Файл повреждён или не является изображением")
                         return render_template('add_news.html', title='Добавление новости', form=form)
 
-                    news.image = f"/static/uploads/news_images/{filename}"
+                    news.image = f"/static/uploads/{filename}"
             db_sess.add(news)
             db_sess.commit()
             return redirect('/news')
@@ -343,7 +341,7 @@ def login():
     elif form.submit_log.data:
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email_log.data).first()
-        if user and user.check_password(form.password_log.data):
+        if user and user.check_password(form.password_log.data) and form.username_log.data:
             login_user(user)
             return redirect(url_for('home'))
         else:
@@ -373,15 +371,51 @@ def can_manage_news(news):
 @login_required
 def admin():
     form = Admin()
-    db_sess = db_session.create_session()
-    if form.submit.data:
-        if not db_sess.query(User).filter(User.name == form.get_user.data).first():
-            return render_template('admin/test.html', title='admin', form=form, message="такого пользователя не существует")
+    if form.submit.data and form.get_user.data:
         response = requests.get(
-            f'http://127.0.0.1:2010/api/user/{form.get_user.data}'
+            f'http://127.0.0.1:2010/api/user/{form.get_user.data}',
+            cookies=request.cookies
         )
-        result = response.json()
-        return render_template('admin/test.html', title='admin', form=form, message=result)
+        if response.status_code == 200:
+            result = response.json()
+        else:
+            try:
+                error = response.json()
+                result = {error : 'Ошибка'}
+            except:
+                result = {'error' : 'Ошибка парсинга ответа сервера'}
+        return render_template('admin/test.html', title='admin', form=form, user=result)
+    elif form.all_users.data:
+        response = requests.get(
+            'http://127.0.0.1:2010/api/all_users',
+            cookies=request.cookies
+        )
+        if response.status_code == 200:
+            result = response.json()
+        else:
+            try:
+                error = response.json()
+                result = {error : 'Ошибка'}
+            except:
+                result = {'error' : 'Ошибка парсинга ответа сервера'}
+        return render_template('admin/test.html', title='admin', form=form, all_users=result)
+    elif form.submit_del.data and form.del_user.data:
+        response = requests.get(
+            f'http://127.0.0.1:2010/api/del_user/{form.del_user.data}',
+            cookies=request.cookies
+        )
+        if response.status_code == 200:
+            result = response.json()
+        else:
+            try:
+                error = response.json()
+                result = {error: 'Ошибка'}
+            except:
+                result = {'error': 'Ошибка парсинга ответа сервера'}
+        return render_template('admin/test.html', title='admin', form=form, del_user=result)
+
+
+
     if current_user.is_admin:
         return render_template('admin/test.html', title='admin', form=form)
     return redirect(url_for('home'))

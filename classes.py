@@ -1,3 +1,5 @@
+from numbers import Number
+
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, RadioField
@@ -49,3 +51,6 @@ class ProfileForm(FlaskForm):
 class Admin(FlaskForm):
     get_user = StringField("Имя пользователя", validators=[DataRequired()])
     submit = SubmitField('получить данные')
+    all_users = SubmitField('все пользователи')
+    del_user =  StringField("id пользователя", validators=[DataRequired()])
+    submit_del = SubmitField('Удалить пользователя')
