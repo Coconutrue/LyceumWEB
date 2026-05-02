@@ -5,74 +5,72 @@ from data.users import User
 
 blueprint = Blueprint('auth_api', __name__, template_folder='templates')
 
-
-@blueprint.route('/api/register', methods=['POST'])
-def user_register():
-    if not request.json:
-        return jsonify({'error': 'Empty request'}), 400
-    data = request.json
-    name = data.get('name')
-    email = data.get('email')
-    password = data.get('password')
-    if not all([name, email, password]):
-        return jsonify({'error': 'Missing fields: name, email, password required'}), 400
-    if len(name) < 3 or len(name) > 14:
-        return jsonify({'error': 'Name must be 3-14 characters'}), 400
-    if len(password) < 3 or len(password) > 14:
-        return jsonify({'error': 'Password must be 3-14 characters'}), 400
-    if '@' not in email:
-        return jsonify({'error': 'Invalid email'}), 400
-    db_sess = db_session.create_session()
-    if db_sess.query(User).filter(User.email == email).first():
-        return jsonify({'error': 'Email already exists'}), 400
-    if db_sess.query(User).filter(User.name == name).first():
-        return jsonify({'error': 'Username already exists'}), 400
-    user = User(name=name, email=email)
-    user.set_password(password)
-    db_sess.add(user)
-    db_sess.commit()
-    login_user(user)
-    return jsonify({
-        'success': True,
-        'user': {
-            'id': user.id,
-            'name': user.name,
-            'email': user.email,
-            'is_admin': user.is_admin
-        }
-    }), 200
-
-
-@blueprint.route('/api/login', methods=['POST'])
-def user_login():
-    if not request.json:
-        return jsonify({'error': 'Empty request'}), 400
-    data = request.json
-    email = data.get('email')
-    password = data.get('password')
-    if not email or not password:
-        return jsonify({'error': 'Email and password required'}), 400
-    db_sess = db_session.create_session()
-    user = db_sess.query(User).filter(User.email == email).first()
-    if not user or not user.check_password(password):
-        return jsonify({'error': 'Invalid email or password'}), 401
-    login_user(user)
-    return jsonify({
-        'success': True,
-        'user': {
-            'id': user.id,
-            'name': user.name,
-            'email': user.email,
-            'is_admin': user.is_admin
-        }
-    })
-
-
-@blueprint.route('/api/logout', methods=['POST'])
-@login_required
-def user_logout():
-    logout_user()
-    return jsonify({'success': True})
+"""дичь для которой нужен JTW"""
+#
+# @blueprint.route('/api/register', methods=['POST'])
+# def user_register():
+#     if not request.json:
+#         return jsonify({'error': 'Empty request'}), 400
+#     data = request.json
+#     name = data.get('name')
+#     email = data.get('email')
+#     password = data.get('password')
+#     if not all([name, email, password]):
+#         return jsonify({'error': 'Missing fields: name, email, password required'}), 400
+#     if len(name) < 3 or len(name) > 14:
+#         return jsonify({'error': 'Name must be 3-14 characters'}), 400
+#     if len(password) < 3 or len(password) > 14:
+#         return jsonify({'error': 'Password must be 3-14 characters'}), 400
+#     if '@' not in email:
+#         return jsonify({'error': 'Invalid email'}), 400
+#     db_sess = db_session.create_session()
+#     if db_sess.query(User).filter(User.email == email).first():
+#         return jsonify({'error': 'Email already exists'}), 400
+#     if db_sess.query(User).filter(User.name == name).first():
+#         return jsonify({'error': 'Username already exists'}), 400
+#     user = User(name=name, email=email)
+#     user.set_password(password)
+#     db_sess.add(user)
+#     db_sess.commit()
+#     login_user(user)
+#     return jsonify({
+#         'success': True,
+#         'user': {
+#             'id': user.id,
+#             'name': user.name,
+#             'email': user.email,
+#             'is_admin': user.is_admin
+#         }
+#     }), 200
+#
+# @blueprint.route('/api/login', methods=['POST'])
+# def user_login():
+#     if not request.json:
+#         return jsonify({'error': 'Empty request'}), 400
+#     data = request.json
+#     email = data.get('email')
+#     password = data.get('password')
+#     if not email or not password:
+#         return jsonify({'error': 'Email and password required'}), 400
+#     db_sess = db_session.create_session()
+#     user = db_sess.query(User).filter(User.email == email).first()
+#     if not user or not user.check_password(password):
+#         return jsonify({'error': 'Invalid email or password'}), 401
+#     login_user(user)
+#     return jsonify({
+#         'success': True,
+#         'user': {
+#             'id': user.id,
+#             'name': user.name,
+#             'email': user.email,
+#             'is_admin': user.is_admin
+#         }
+#     })
+# @blueprint.route('/api/logout', methods=['POST'])
+# @login_required
+# def user_logout():
+#     logout_user()
+#     return jsonify({'success': True})
 
 
 @blueprint.route('/api/user/<int:user_id>', methods=['GET'])
