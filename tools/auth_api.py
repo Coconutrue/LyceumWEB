@@ -1,9 +1,12 @@
+import os
+
 from flask import request, jsonify, Blueprint
 from flask_login import login_user, logout_user, login_required, current_user
 from data import db_session
 from data.users import User
 
 blueprint = Blueprint('auth_api', __name__, template_folder='templates')
+
 
 """дичь для которой нужен JTW"""
 #
@@ -66,17 +69,20 @@ blueprint = Blueprint('auth_api', __name__, template_folder='templates')
 #             'is_admin': user.is_admin
 #         }
 #     })
+#
 # @blueprint.route('/api/logout', methods=['POST'])
 # @login_required
 # def user_logout():
 #     logout_user()
 #     return jsonify({'success': True})
 
-
-@blueprint.route('/api/user/<int:user_id>', methods=['GET'])
-def api_get_user(user_id):
+@blueprint.route('/api/user/<string:user_name>', methods=['GET'])
+@login_required
+def api_get_user(user_name):
     db_sess = db_session.create_session()
-    user = db_sess.get(User, user_id)
+    user = db_sess.query(User).filter(User.name == user_name).first()
+    if not current_user.is_admin:
+        return jsonify({'error': 'Admin access required'}), 403
     if not user:
         return jsonify({'error': 'User not found'}), 404
     return jsonify({
@@ -102,7 +108,6 @@ def api_update_user():
     if new_name and new_name != user.name:
         if len(new_name) < 3 or len(new_name) > 14:
             return jsonify({'error': 'Name must be 3-14 characters'}), 400
-
         existing = db_sess.query(User).filter(User.name == new_name).first()
         if existing and existing.id != user.id:
             return jsonify({'error': 'Username already exists'}), 400
@@ -138,3 +143,44 @@ def api_update_user():
             'is_admin': user.is_admin
         }
     })
+
+
+@blueprint.route('/api/all_users')
+@login_required
+def get_all_users():
+    if not current_user.is_admin:
+        return jsonify({'error': 'Admin access required'}), 403
+    db_sess = db_session.create_session()
+    news = db_sess.query(User).all()
+    return jsonify(
+        {
+            'users':
+                [item.to_dict(only=('id', 'email', 'name', 'created_date', 'is_admin'))
+                 for item in news]
+        }
+    )
+
+@blueprint.route('/api/del_user/<string:user_id>')
+@login_required
+def admin_delete_user(user_id):
+    try:
+        user_id = int(user_id)
+    except ValueError:
+        return jsonify({'error': 'Число вводи'}), 403
+    if not current_user.is_admin:
+        return jsonify({'error': 'Admin access required'}), 403
+    if user_id == current_user.id:
+        return jsonify({'error': 'Cannot delete yourself'}), 400
+    db_sess = db_session.create_session()
+    user = db_sess.get(User, user_id)
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    for news in user.news:
+        if news.image:
+            image_path = os.path.join('static/uploads', news.image.split('/')[-1])
+            if os.path.exists(image_path):
+                os.remove(image_path)
+        db_sess.delete(news)
+    db_sess.delete(user)
+    db_sess.commit()
+    return jsonify({'success': True, 'message': f'User {user.name} deleted'})
