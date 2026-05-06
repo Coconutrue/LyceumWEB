@@ -255,7 +255,7 @@ def edit_news(id):
                         os.remove(filepath)
                         form.image.errors.append("Файл повреждён или не является изображением")
                         return render_template('add_news.html', title='Редактирование новости', form=form)
-                    news.image = f"/static/uploads/news_images/{filename}"
+                    news.image = f"/static/uploads/{filename}"
             db_sess.commit()
             if saved_filepath and old_path and os.path.exists(old_path):
                 os.remove(old_path)
