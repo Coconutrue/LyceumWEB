@@ -1,4 +1,5 @@
 import requests
+from waitress import serve
 
 from classes import LoginForm, NewsForm, homeForm, ProfileForm, Admin
 from data.users import User
@@ -7,7 +8,8 @@ from data.News import News
 from PIL import Image
 import os
 import uuid
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, Response, stream_with_context, \
+    render_template_string, jsonify
 from flask_restful import abort
 from data import db_session
 from tools import news_api, auth_api
@@ -19,6 +21,58 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['NEWS_UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 os.makedirs(app.config['NEWS_UPLOAD_FOLDER'], exist_ok=True)
+
+
+@app.route('/bluemap/', defaults={'path': ''})
+@app.route('/bluemap/<path:path>')
+def bluemap_proxy(path):
+    """Прокси для BlueMap - обрабатывает все файлы"""
+    try:
+        if path == '':
+            url = 'http://217.106.107.168:38815/'
+        else:
+            url = f'http://217.106.107.168:38815/{path}'
+        if request.query_string:
+            url = f"{url}?{request.query_string.decode()}"
+        resp = requests.get(url, stream=True, timeout=30)
+        content_type = resp.headers.get('content-type', '')
+        if content_type == 'text/html' or path == '' or path.endswith('.html'):
+            html_content = resp.text
+            replacements = [
+                ('href="/', 'href="/bluemap/'),
+                ('src="/', 'src="/bluemap/'),
+                ("href='/'", "href='/bluemap/"),
+                ("src='/'", "src='/bluemap/"),
+                ('url("/', 'url("/bluemap/'),
+                ('url(/)', 'url(/bluemap/)'),
+            ]
+
+            for old, new in replacements:
+                html_content = html_content.replace(old, new)
+            response = Response(html_content, status=resp.status_code, content_type='text/html')
+        else:
+            response = Response(
+                stream_with_context(resp.iter_content(chunk_size=8192)),
+                status=resp.status_code,
+                content_type=content_type
+            )
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        if path.endswith(('.js', '.css', '.png', '.jpg', '.gif', '.webp')):
+            response.headers['Cache-Control'] = 'public, max-age=86400'
+        else:
+            response.headers['Cache-Control'] = 'no-cache'
+        return response
+    except requests.exceptions.ConnectionError:
+        return render_template_string('''
+            <div style="text-align:center; padding:50px; background:rgba(0,0,0,0.8); border-radius:10px; margin:20px;">
+                <h3 style="color:#ffc107;">Карта временно недоступна</h3>
+                <p style="color:white;">Сервер BlueMap не отвечает. Пожалуйста, попробуйте позже.</p>
+                <p style="color:#aaa; font-size:12px;">Проверьте что сервер Minecraft запущен и BlueMap работает</p>
+            </div>
+        '''), 503
+    except Exception as e:
+        print(f"Proxy error: {e}")
+        return f'Proxy error: {str(e)}', 500
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -410,7 +464,6 @@ if __name__ == '__main__':
     app.register_blueprint(news_api.blueprint)
     app.register_blueprint(auth_api.blueprint)
     app.run(port=2010, host='127.0.0.1', debug=True)
-
-
+    # serve(app, host='127.0.0.1', port=2010)
 
     #tuna http 2010
