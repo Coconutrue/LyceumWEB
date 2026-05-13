@@ -4,7 +4,6 @@ aiosignal==1.4.0
 aniso8601==10.0.1
 attrs==25.4.0
 blinker==1.9.0
-BlueMapWrapper==1.0.4
 certifi==2026.2.25
 charset-normalizer==3.4.4
 click==8.3.1
@@ -23,12 +22,10 @@ MarkupSafe==3.0.3
 multidict==6.7.1
 numpy==2.4.4
 pillow==12.1.1
-propcache==0.4.1
 psycopg2-binary==2.9.11
 pytz==2026.1.post1
 requests==2.32.5
 six==1.17.0
-skinpy==0.0.4
 SQLAlchemy==2.0.48
 sqlalchemy-serializer==1.6.2
 typing_extensions==4.15.0
@@ -36,3 +33,7 @@ urllib3==2.6.3
 Werkzeug==3.1.6
 WTForms==3.2.1
 yarl==1.23.0
+
+
+
+
