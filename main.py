@@ -1,6 +1,4 @@
 import requests
-from waitress import serve
-
 from classes import LoginForm, NewsForm, homeForm, ProfileForm, Admin
 from data.users import User
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
@@ -21,35 +19,51 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['NEWS_UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 os.makedirs(app.config['NEWS_UPLOAD_FOLDER'], exist_ok=True)
+BLUEMAP_ORIGIN = 'http://217.106.107.168:38815'
+
+def rewrite_paths(content):
+    replacements = [
+        ('href="/', 'href="/bluemap/'),
+        ('src="/', 'src="/bluemap/'),
+        ("href='/", "href='/bluemap/"),
+        ("src='/", "src='/bluemap/"),
+        ('url("/', 'url("/bluemap/'),
+        ("url('/", "url('/bluemap/"),
+        ('url(/', 'url(/bluemap/'),
+        ('"/maps/', '"/bluemap/maps/'),
+        ("'/maps/", "'/bluemap/maps/"),
+        ('`/maps/', '`/bluemap/maps/'),
+    ]
+    for old, new in replacements:
+        content = content.replace(old, new)
+    return content
 
 
 @app.route('/bluemap/', defaults={'path': ''})
 @app.route('/bluemap/<path:path>')
 def bluemap_proxy(path):
-    """Прокси для BlueMap - обрабатывает все файлы"""
     try:
         if path == '':
-            url = 'http://217.106.107.168:38815/'
+            url = f'{BLUEMAP_ORIGIN}/'
         else:
-            url = f'http://217.106.107.168:38815/{path}'
+            url = f'{BLUEMAP_ORIGIN}/{path}'
         if request.query_string:
             url = f"{url}?{request.query_string.decode()}"
         resp = requests.get(url, stream=True, timeout=30)
         content_type = resp.headers.get('content-type', '')
-        if content_type == 'text/html' or path == '' or path.endswith('.html'):
-            html_content = resp.text
-            replacements = [
-                ('href="/', 'href="/bluemap/'),
-                ('src="/', 'src="/bluemap/'),
-                ("href='/'", "href='/bluemap/"),
-                ("src='/'", "src='/bluemap/"),
-                ('url("/', 'url("/bluemap/'),
-                ('url(/)', 'url(/bluemap/)'),
-            ]
-
-            for old, new in replacements:
-                html_content = html_content.replace(old, new)
-            response = Response(html_content, status=resp.status_code, content_type='text/html')
+        is_html = 'text/html' in content_type or path == '' or path.endswith('.html')
+        is_js = 'javascript' in content_type or path.endswith('.js')
+        is_json = 'json' in content_type or path.endswith('.json')
+        if is_html or is_js or is_json:
+            text_content = resp.text
+            text_content = rewrite_paths(text_content)
+            if is_html:
+                resp_content_type = 'text/html; charset=utf-8'
+            elif is_js:
+                resp_content_type = 'application/javascript; charset=utf-8'
+            else:
+                resp_content_type = 'application/json; charset=utf-8'
+            response = Response(text_content, status=resp.status_code, content_type=resp_content_type)
         else:
             response = Response(
                 stream_with_context(resp.iter_content(chunk_size=8192)),
@@ -57,7 +71,8 @@ def bluemap_proxy(path):
                 content_type=content_type
             )
         response.headers['Access-Control-Allow-Origin'] = '*'
-        if path.endswith(('.js', '.css', '.png', '.jpg', '.gif', '.webp')):
+        response.headers['Access-Control-Allow-Headers'] = '*'
+        if path.endswith(('.js', '.css', '.png', '.jpg', '.gif', '.webp', '.svg')):
             response.headers['Cache-Control'] = 'public, max-age=86400'
         else:
             response.headers['Cache-Control'] = 'no-cache'
@@ -67,7 +82,6 @@ def bluemap_proxy(path):
             <div style="text-align:center; padding:50px; background:rgba(0,0,0,0.8); border-radius:10px; margin:20px;">
                 <h3 style="color:#ffc107;">Карта временно недоступна</h3>
                 <p style="color:white;">Сервер BlueMap не отвечает. Пожалуйста, попробуйте позже.</p>
-                <p style="color:#aaa; font-size:12px;">Проверьте что сервер Minecraft запущен и BlueMap работает</p>
             </div>
         '''), 503
     except Exception as e:
@@ -345,7 +359,7 @@ def login():
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Пароли не совпадают")
-        if len(form.password_reg.data) >= 14 or len(form.password_reg.data) < 3:
+        if len(form.password_reg.data) > 14 or len(form.password_reg.data) < 3:
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Ошибка. Длина имени должна составлять от 3 до 14 символов")
@@ -353,7 +367,7 @@ def login():
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Все регистрационные поля должны быть заполнены")
-        if len(form.username_reg.data) >= 14 or len(form.username_reg.data) < 3:
+        if len(form.username_reg.data) > 14 or len(form.username_reg.data) < 3:
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Ошибка. Длина имени должна составлять от 4 до 14 символов")
@@ -463,7 +477,4 @@ if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
     app.register_blueprint(news_api.blueprint)
     app.register_blueprint(auth_api.blueprint)
-    app.run(port=2010, host='127.0.0.1', debug=True)
-    # serve(app, host='127.0.0.1', port=2010)
-
-    #tuna http 2010
+    app.run(port=5000, host='0.0.0.0', debug=True)
