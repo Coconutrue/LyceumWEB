@@ -9,6 +9,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/static/css/style_about.css">
     <title>{{title}}</title>
+    <style>
+        /* Дополнительные стили для нового подвала */
+        footer {
+            margin-top: 3rem;
+            backdrop-filter: blur(10px); /* Лёгкое размытие фона */
+            background: rgba(0, 0, 0, 0.75); /* Чёрный с прозрачностью 75% */
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .footer-link {
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .footer-link:hover {
+            opacity: 0.8;
+            transform: translateX(3px);
+            display: inline-block;
+        }
+        .social-icon {
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+        .server-id-badge {
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 3px solid #ffc107;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            backdrop-filter: blur(5px);
+        }
+        hr {
+            opacity: 0.3;
+            border-color: rgba(255,255,255,0.2);
+        }
+    </style>
 </head>
 <body>
 
@@ -147,6 +192,50 @@
         <i class="fas fa-arrow-left me-2"></i>Вернуться на главную
     </a>
 </div>
+
+<footer class="pt-5 pb-4">
+    <div class="container">
+        <div class="row text-white">
+            <div class="col-md-4 mb-4">
+                <h4 class="fw-bold mb-3">
+                    <i class="fas fa-users me-2" style="color: #ffc107;"></i>
+                    Авторы проекта
+                </h4>
+                <ul class="list-unstyled small">
+                    <li class="mb-2">
+                        <i class="fas fa-code me-2 text-warning"></i>
+                        <strong>Автор проекта:</strong> elevartion
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-code me-2 text-warning"></i>
+                        <strong>Соавтор:</strong> coconut
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h4 class="fw-bold mb-3">
+                    <i class="fas fa-server me-2" style="color: #ffc107;"></i>
+                    Сервер
+                </h4>
+                <div class="server-id-badge mb-3">
+                    <i class="fas fa-cube me-2"></i>
+                    <strong>IP-адрес:</strong> <span style="font-size: 1.1rem; letter-spacing: 1px;">217.106.107.168:27223</span>
+                </div>
+                <div class="server-id-badge mb-3">
+                    <i class="fas fa-hashtag me-2"></i>
+                    <strong>ID сервера:</strong> <span style="font-size: 1.1rem; letter-spacing: 1px;">...</span>
+                </div>
+                <div class="server-id-badge">
+                    <i class="fas fa-gamepad me-2"></i>
+                    <strong>Версия:</strong> 1.21.1
+                </div>
+                <div class="mt-3 small opacity-75">
+                    <i class="fas fa-signal me-1"></i> Онлайн: 24/7
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
