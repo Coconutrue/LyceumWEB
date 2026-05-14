@@ -17,3 +17,6 @@ def make_admin(email):
 if __name__ == "__main__":
     email = input("поиск по почте. Вводи").strip()
     make_admin(email)
+
+
+#1011011110111011001011010

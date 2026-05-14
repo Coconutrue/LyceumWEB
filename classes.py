@@ -51,6 +51,11 @@ class ProfileForm(FlaskForm):
 class Admin(FlaskForm):
     get_user = StringField("Имя пользователя", validators=[DataRequired()])
     submit = SubmitField('получить данные')
-    all_users = SubmitField('все пользователи')
-    del_user =  StringField("id пользователя", validators=[DataRequired()])
+    show_all_users = SubmitField('все пользователи')
+    show_all_admins = SubmitField('все админы')
+    del_user = StringField("id пользователя", validators=[DataRequired()])
     submit_del = SubmitField('Удалить пользователя')
+    admin_user_id = StringField("ID пользователя для управления правами")
+    make_admin = SubmitField('Назначить админом')
+    remove_admin = SubmitField('Снять права админа')
+    toggle_admin = SubmitField('Переключить статус админа')

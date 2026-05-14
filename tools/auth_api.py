@@ -189,3 +189,78 @@ def admin_delete_user(user_id):
     db_sess.delete(user)
     db_sess.commit()
     return jsonify({'success': True, 'message': f'User {user.name} deleted'})
+
+
+@blueprint.route('/api/admins', methods=['GET'])
+@login_required
+def get_all_admins():
+    if not current_user.is_admin:
+        return jsonify({'error': 'Требуется доступ администратора'}), 403
+    db_sess = db_session.create_session()
+    admins = db_sess.query(User).filter(User.is_admin == True).all()
+    return jsonify({
+        'count': len(admins),
+        'admins': [
+            {
+                'id': admin.id,
+                'name': admin.name,
+                'email': admin.email,
+                'created_date': admin.created_date.isoformat() if admin.created_date else None
+            }
+            for admin in admins
+        ]
+    })
+
+
+@blueprint.route('/api/user/<int:user_id>/make_admin', methods=['POST'])
+@login_required
+def make_admin(user_id):
+    if not current_user.is_admin:
+        return jsonify({'error': 'Требуется доступ администратора'}), 403
+    db_sess = db_session.create_session()
+    user = db_sess.get(User, user_id)
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    if user.is_admin:
+        return jsonify({'error': f'{user.name} уже админ'}), 400
+    user.is_admin = True
+    db_sess.commit()
+    return jsonify({
+        'success': True,
+        'message': f'{user.name} (ID: {user.id}) теперь админ',
+        'user': {
+            'id': user.id,
+            'name': user.name,
+            'email': user.email,
+            'is_admin': user.is_admin
+        }
+    })
+
+
+@blueprint.route('/api/user/<int:user_id>/remove_admin', methods=['POST'])
+@login_required
+def remove_admin(user_id):
+    if not current_user.is_admin:
+        return jsonify({'error': 'Требуется доступ администратора'}), 403
+    db_sess = db_session.create_session()
+    user = db_sess.get(User, user_id)
+    if not user:
+        return jsonify({'error': 'не найден'}), 404
+    if user_id == 1 and user.is_admin:
+        return jsonify({'error': 'Не трожь суперадмина'}), 403
+    if user_id == current_user.id:
+        return jsonify({'error': 'Нельзя снять админку с самого себя'}), 400
+    if not user.is_admin:
+        return jsonify({'error': f'{user.name} не админ'}), 400
+    user.is_admin = False
+    db_sess.commit()
+    return jsonify({
+        'success': True,
+        'message': f'Админ {user.name} удален (ID: {user.id})',
+        'user': {
+            'id': user.id,
+            'name': user.name,
+            'email': user.email,
+            'is_admin': user.is_admin
+        }
+    })

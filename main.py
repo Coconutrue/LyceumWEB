@@ -355,23 +355,25 @@ def load_user(user_id):
 def login():
     form = LoginForm()
     if form.submit_reg.data:
+        db_sess = db_session.create_session()
         if form.password_reg.data != form.confirm_password_reg.data:
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Пароли не совпадают")
-        if len(form.password_reg.data) > 14 or len(form.password_reg.data) < 3:
+        if len(form.password_reg.data) < 3:
             return render_template('login.html', title='Авторизация',
                                    form=form,
-                                   message="Ошибка. Длина имени должна составлять от 3 до 14 символов")
-        if not form.username_reg.data or not form.email_reg.data or not form.password_reg.data:
-            return render_template('login.html', title='Авторизация',
-                                   form=form,
-                                   message="Все регистрационные поля должны быть заполнены")
+                                   message="Ошибка. Длина пароля должна быть больше 3 пунктов, ради вашей безопастности")
         if len(form.username_reg.data) > 14 or len(form.username_reg.data) < 3:
             return render_template('login.html', title='Авторизация',
                                    form=form,
                                    message="Ошибка. Длина имени должна составлять от 4 до 14 символов")
-        db_sess = db_session.create_session()
+
+        if not form.username_reg.data or not form.email_reg.data or not form.password_reg.data:
+            return render_template('login.html', title='Авторизация',
+                                   form=form,
+                                   message="Все регистрационные поля должны быть заполнены")
+
         if db_sess.query(User).filter(User.email == form.email_reg.data).first():
             return render_template('login.html', title='Авторизация',
                                    form=form,
@@ -403,7 +405,7 @@ def login():
         else:
             return render_template('login.html', title='Авторизация',
                                    form=form,
-                                   message="Неверный адрес электронной почты или пароль")
+                                   message="Неверное имя пользователя, адрес электронной почты или пароль")
     return render_template('login.html', title='Авторизация', form=form)
 
 """ажминка"""
@@ -422,13 +424,75 @@ def can_manage_news(news):
         return True
     return False
 
+
 @app.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin():
     form = Admin()
-    if form.submit.data and form.get_user.data:
+    if form.make_admin.data and form.admin_user_id.data:
+        try:
+            user_id = int(form.admin_user_id.data)
+            response = requests.post(
+                f'http://127.0.0.1:5000/api/user/{user_id}/make_admin',
+                cookies=request.cookies
+            )
+            if response.status_code == 200:
+                result = response.json()
+            else:
+                result = response.json() if response.text else {'error': 'Ошибка при назначении админа'}
+            return render_template('admin/test.html', title='admin', form=form, admin_result=result)
+        except ValueError:
+            return render_template('admin/test.html', title='admin', form=form,
+                                   admin_result={'success': False, 'error': 'ID должен быть числом'})
+    elif form.remove_admin.data and form.admin_user_id.data:
+        try:
+            user_id = int(form.admin_user_id.data)
+            response = requests.post(
+                f'http://127.0.0.1:5000/api/user/{user_id}/remove_admin',
+                cookies=request.cookies
+            )
+            if response.status_code == 200:
+                result = response.json()
+            else:
+                result = response.json() if response.text else {'error': 'Ошибка при снятии прав админа'}
+            return render_template('admin/test.html', title='admin', form=form, admin_result=result)
+        except ValueError:
+            return render_template('admin/test.html', title='admin', form=form,
+                                   admin_result={'success': False, 'error': 'ID должен быть числом'})
+    elif form.toggle_admin.data and form.admin_user_id.data:
+        try:
+            user_id = int(form.admin_user_id.data)
+            response = requests.post(
+                f'http://127.0.0.1:5000/api/toggle_admin/{user_id}',
+                cookies=request.cookies
+            )
+            if response.status_code == 200:
+                result = response.json()
+            else:
+                result = response.json() if response.text else {'error': 'Ошибка при переключении статуса'}
+            return render_template('admin/test.html', title='admin', form=form, admin_result=result)
+        except ValueError:
+            return render_template('admin/test.html', title='admin', form=form,
+                                   admin_result={'success': False, 'error': 'ID должен быть числом'})
+    elif form.show_all_admins.data:
         response = requests.get(
-            f'http://127.0.0.1:2010/api/user/{form.get_user.data}',
+            'http://127.0.0.1:5000/api/admins',
+            cookies=request.cookies
+        )
+        if response.status_code == 200:
+            result = response.json()
+            return render_template('admin/test.html', title='admin', form=form, admins_list=result)
+        else:
+            try:
+                error = response.json()
+                return render_template('admin/test.html', title='admin', form=form,
+                                       all_users={'error': error.get('error', 'Ошибка')})
+            except:
+                return render_template('admin/test.html', title='admin', form=form,
+                                       all_users={'error': 'Ошибка парсинга ответа сервера'})
+    elif form.submit.data and form.get_user.data:
+        response = requests.get(
+            f'http://127.0.0.1:5000/api/user/{form.get_user.data}',
             cookies=request.cookies
         )
         if response.status_code == 200:
@@ -436,13 +500,13 @@ def admin():
         else:
             try:
                 error = response.json()
-                result = {error : 'Ошибка'}
+                result = {'error': error.get('error', 'Ошибка')}
             except:
-                result = {'error' : 'Ошибка парсинга ответа сервера'}
+                result = {'error': 'Ошибка парсинга ответа сервера'}
         return render_template('admin/test.html', title='admin', form=form, user=result)
-    elif form.all_users.data:
+    elif form.show_all_users.data:
         response = requests.get(
-            'http://127.0.0.1:2010/api/all_users',
+            'http://127.0.0.1:5000/api/all_users',
             cookies=request.cookies
         )
         if response.status_code == 200:
@@ -450,13 +514,13 @@ def admin():
         else:
             try:
                 error = response.json()
-                result = {error : 'Ошибка'}
+                result = {'error': error.get('error', 'Ошибка')}
             except:
-                result = {'error' : 'Ошибка парсинга ответа сервера'}
+                result = {'error': 'Ошибка парсинга ответа сервера'}
         return render_template('admin/test.html', title='admin', form=form, all_users=result)
     elif form.submit_del.data and form.del_user.data:
         response = requests.get(
-            f'http://127.0.0.1:2010/api/del_user/{form.del_user.data}',
+            f'http://127.0.0.1:5000/api/del_user/{form.del_user.data}',
             cookies=request.cookies
         )
         if response.status_code == 200:
@@ -464,14 +528,13 @@ def admin():
         else:
             try:
                 error = response.json()
-                result = {error: 'Ошибка'}
+                result = {'error': error.get('error', 'Ошибка')}
             except:
                 result = {'error': 'Ошибка парсинга ответа сервера'}
         return render_template('admin/test.html', title='admin', form=form, del_user=result)
     if current_user.is_admin:
         return render_template('admin/test.html', title='admin', form=form)
     return redirect(url_for('home'))
-
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
