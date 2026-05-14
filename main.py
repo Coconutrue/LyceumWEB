@@ -152,7 +152,7 @@ def profile():
                                            form=form,
                                            message="Это имя пользователя уже занято")
                 user.name = form.username.data
-            if len(form.username.data) < 4 or len(form.username.data) > 14:
+            if len(form.username.data) < 3 or len(form.username.data) > 14:
                 return render_template('profile.html', title='Авторизация',
                                        form=form,
                                        message="Ошибка. Длина имени должна составлять от 3 до 14 символов")
@@ -176,7 +176,7 @@ def profile():
                     return render_template('profile.html',
                                            form=form,
                                            message="Новые пароли не совпадают")
-                if len(form.new_password.data) < 4 or len(form.new_password.data) > 14:
+                if len(form.new_password.data) < 3 or len(form.new_password.data) > 14:
                     return render_template('profile.html', title='Авторизация',
                                            form=form,
                                            message="Ошибка. Длина пароля должна составлять от 4 до 14 символов")
