@@ -41,7 +41,7 @@
     </div>
 <iframe
     id="bluemap-frame"
-    src="{{ url_for('bluemap_proxy', path='') }}"
+    src="{{ url_for('bluemap_proxy', path='') }}{% if x is not none and z is not none %}#world:{{ x }}:{{ y }}:{{ z }}:500:0:0:0:0:perspective{% endif %}"
     title="BlueMap">
 </iframe>
 </div>
