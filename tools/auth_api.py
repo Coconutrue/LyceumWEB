@@ -246,8 +246,6 @@ def remove_admin(user_id):
     user = db_sess.get(User, user_id)
     if not user:
         return jsonify({'error': 'не найден'}), 404
-    if user_id == 1 and user.is_admin:
-        return jsonify({'error': 'Не трожь суперадмина'}), 403
     if user_id == current_user.id:
         return jsonify({'error': 'Нельзя снять админку с самого себя'}), 400
     if not user.is_admin:
